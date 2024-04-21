@@ -15,7 +15,7 @@ public class View{
         contr.startSale();
 
         itemDTO item = contr.scanItem(1, 1);
-        System.out.println(item.name());
+        System.out.println(item.getName());
     }
 
 

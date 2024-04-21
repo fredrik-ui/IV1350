@@ -23,16 +23,16 @@ public class itemDTO {
     public int getItemID(){
         return itemID;
     }
-    public String name(){
+    public String getName(){
         return name;
     }
-    public int price(){
+    public int getPrice(){
         return price;
     }
-    public int VAT(){
+    public int getVAT(){
         return VAT;
     }
-    public String description(){
+    public String getDescription(){
         return description;
     }
     

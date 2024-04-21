@@ -4,13 +4,16 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
+import se.kth.IV1350.integration.ReceiptPrinter;
 import se.kth.IV1350.integration.itemDTO;
 
 
 public class Sale {
    
     private Date time;
+    private double totalPrice;
+    private double totalVAT;
+    private double totalPriceAfterDiscount;
     // The item and it's quantity
     private LinkedHashMap<itemDTO, Integer> scannedItems = new LinkedHashMap<>();
 
@@ -40,12 +43,27 @@ public class Sale {
 
     public void additemToSale(itemDTO item, int quantity) {
         scannedItems.put(item, quantity);
+        totalPrice+=item.getPrice();
+        //totalVAT+=item.getVAT();
     }
 
-    public float applyTotalDiscount(){
-        return 0;
+    public double applyTotalDiscount(double discount){
+        if(totalPrice-discount<=0){
+            totalPriceAfterDiscount = 0;
+        }else{
+            totalPriceAfterDiscount = totalPrice-discount;
+        }
+        return totalPriceAfterDiscount;
     }
-    public Payment endSale(float amount){
+    public Payment endSale(double amount){
+
+        // 1.1.1
+        Payment payment = new Payment(amount, totalPrice);
+        //1.1.2
+        Receipt receipt = new Receipt(payment);
+        //1.1.3
+        ReceiptPrinter.printReceipt(receipt);
+        
         return null;
     }
 }

@@ -1,7 +1,5 @@
 package se.kth.IV1350.integration;
 
-
-
 public class ExternalDB{
 
     private ExternalAccountingSystem accountingSystem;
@@ -24,8 +22,5 @@ public class ExternalDB{
         return discountDBSystem;
     }
 
-    public itemDTO getItemFromDB(int itemID) {
-        throw new UnsupportedOperationException("Unimplemented method 'getItemFromDB'");
-    }
 
 }
