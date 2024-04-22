@@ -1,2 +1,15 @@
 /task1/
 /task2/
+/task3/src/se/kth/IV1350/controller/Controller.class
+/task3/src/se/kth/IV1350/integration/DiscountDB.class
+/task3/src/se/kth/IV1350/integration/ExternalAccountingSystem.class
+/task3/src/se/kth/IV1350/integration/ExternalDB.class
+/task3/src/se/kth/IV1350/integration/ExternalInventorySystem.class
+/task3/src/se/kth/IV1350/integration/itemDTO.class
+/task3/src/se/kth/IV1350/integration/ReceiptPrinter.class
+/task3/src/se/kth/IV1350/model/CashRegister.class
+/task3/src/se/kth/IV1350/model/Payment.class
+/task3/src/se/kth/IV1350/model/Sale.class
+/task3/src/se/kth/IV1350/startup/Main.class
+/task3/src/se/kth/IV1350/view/View.class
+/task3/bin/se/kth/IV1350
