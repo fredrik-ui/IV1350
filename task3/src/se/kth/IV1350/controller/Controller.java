@@ -11,14 +11,14 @@ import se.kth.IV1350.model.Sale;
 public class Controller{
     
     private ExternalDB externalSystems;
-    private ReceiptPrinter printer;
+    //private ReceiptPrinter printer;
     private Sale sale;
     //private int customerID;
 
     public Controller(ExternalDB exDB, ReceiptPrinter printer){
         CashRegister cashRegister = new CashRegister();
         this.externalSystems = exDB;
-        this.printer = printer;
+        //this.printer = printer;
     }
 
     public void startSale(){

@@ -1,9 +1,5 @@
 package se.kth.IV1350.model;
 
-import java.util.LinkedHashMap;
-
-import se.kth.IV1350.integration.itemDTO;
-
 public class Payment {
 
     double totalAmountPaid;

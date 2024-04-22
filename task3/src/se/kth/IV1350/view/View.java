@@ -14,8 +14,12 @@ public class View{
     public void run() {
         contr.startSale();
 
-        itemDTO item = contr.scanItem(1, 1);
-        System.out.println(item.getName());
+        itemDTO item = contr.scanItem(1, 2);
+        //System.out.println(item.getName());
+        //System.out.println(item.getPrice()*2);
+        contr.scanItem(2, 1);
+        contr.scanItem(1, 1);
+        contr.enterPayemnt(100);
     }
 
 
