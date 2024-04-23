@@ -1,16 +1,18 @@
 package se.kth.IV1350.integration;
 
+import se.kth.IV1350.model.Amount;
+
 public class itemDTO {
     
     // When the itemDTO is created these values cannot be changed
     private final int itemID;
     private final String name;
-    private final int price;
-    private final int VAT;
+    private final Amount price;
+    private final Amount VAT;
     private final String description;
 
 
-    public itemDTO(int itemID,String name, int price, int VAT, String description){
+    public itemDTO(int itemID,String name, Amount price, Amount VAT, String description){
         this.itemID = itemID;
         this.name = name;
         this.price = price;
@@ -26,10 +28,10 @@ public class itemDTO {
     public String getName(){
         return name;
     }
-    public int getPrice(){
+    public Amount getPrice(){
         return price;
     }
-    public int getVAT(){
+    public Amount getVAT(){
         return VAT;
     }
     public String getDescription(){

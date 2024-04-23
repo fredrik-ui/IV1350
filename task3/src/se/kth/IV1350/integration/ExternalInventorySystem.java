@@ -2,6 +2,8 @@ package se.kth.IV1350.integration;
 
 import java.util.ArrayList;
 
+import se.kth.IV1350.model.Amount;
+
 public class ExternalInventorySystem {
 
 
@@ -9,9 +11,9 @@ public class ExternalInventorySystem {
 
     public ExternalInventorySystem(){
         // Here manually the items are added to the list "items"
-        items.add(new itemDTO(1, "korv", 10, 5, "60% kötthalt"));
-        items.add(new itemDTO(2, "Mjölk", 20, 5, "Mejeir produkt"));
-        items.add(new itemDTO(3, "Pasta", 15, 5, "Gjort på durum vete"));
+        items.add(new itemDTO(1, "Korv", new Amount(10), new Amount(5), "60% kötthalt"));
+        items.add(new itemDTO(2, "Mjölk", new Amount(20), new Amount(5), "Mejeir produkt"));
+        items.add(new itemDTO(3, "Pasta", new Amount(15), new Amount(5), "Gjort på durum vete"));
 
     }
 

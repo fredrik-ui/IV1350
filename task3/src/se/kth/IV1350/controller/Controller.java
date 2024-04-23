@@ -3,6 +3,7 @@ package se.kth.IV1350.controller;
 import se.kth.IV1350.integration.ExternalDB;
 import se.kth.IV1350.integration.ReceiptPrinter;
 import se.kth.IV1350.integration.itemDTO;
+import se.kth.IV1350.model.Amount;
 import se.kth.IV1350.model.CashRegister;
 import se.kth.IV1350.model.Payment;
 import se.kth.IV1350.model.Sale;
@@ -48,15 +49,14 @@ public class Controller{
     }
 
     public double startDiscount(int customerID){
-        double discount = externalSystems.getDiscountDBSystem().getDiscount(customerID, sale);
-        double newPrice = sale.applyTotalDiscount(discount);
+        Amount discount = externalSystems.getDiscountDBSystem().getDiscount(customerID, sale);
+        double newPrice = sale.applyTotalDiscount(discount).getValue();
         return newPrice;
     }
 
     public Payment enterPayemnt(double amount){
         Payment change = sale.endSale(amount);
         return change;
-        
     }
 
 }

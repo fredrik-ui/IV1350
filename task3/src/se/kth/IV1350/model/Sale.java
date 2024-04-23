@@ -1,76 +1,130 @@
 package se.kth.IV1350.model;
 
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Date;
 
 import se.kth.IV1350.integration.ReceiptPrinter;
 import se.kth.IV1350.integration.itemDTO;
 
 
+/**
+ * Represents a sale transaction in the point of sale system.
+ */
 public class Sale {
-   
-    private LocalDateTime  time;
-    private double totalPrice;
-    private double totalVAT;
-    private double totalPriceAfterDiscount;
-    private boolean itemExist = false;
-    // The item and it's quantity
+
+    //private LocalDateTime time;
+    private Date time;
+    private Amount totalPrice;
+    private Amount totalVAT; 
+    private Amount totalPriceAfterDiscount; 
     private LinkedHashMap<itemDTO, Integer> scannedItems = new LinkedHashMap<>();
 
-
-    // Start the sale and set the start time of it
+    /**
+     * Constructs a new Sale object and sets the start time of the sale.
+     */
     public Sale(){
         setTimeOfSale();
+        this.totalPrice = new Amount();
+        this.totalVAT = new Amount(0);
+
     }
 
+    /**
+     * Sets the time of sale to the current system time.
+     */
     public void setTimeOfSale(){
-        time = LocalDateTime.now();
-
+        time = new Date();
     }
 
+    /**
+     * Checks if an item with the specified ID already exists in the sale.
+     * @param itemID The ID of the item to check for duplicates.
+     * @return The item if found, otherwise null.
+     */
     public itemDTO checkForDuplicate(int itemID) {
-        // Iterate over the entries of scannedItems map
         for (Map.Entry<itemDTO, Integer> entry : scannedItems.entrySet()) {
             itemDTO currentItem = entry.getKey();
-            // Check if the current item's ID matches the given itemID
             if (currentItem.getItemID() == itemID) {
-                itemExist = true;
-                return currentItem; // Item with the given ID found, reutrn that item
+                return currentItem; // Item with the given ID found, return that item
             }
         }
-        return null; // Item with the given ID not found
+        return null; 
     }
 
-
+    /**
+     * Adds an item to the sale with the specified quantity.
+     * If the item already exists in the sale, its quantity is updated.
+     * @param item The item to add to the sale.
+     * @param quantity The quantity of the item to add.
+     */
     public void additemToSale(itemDTO item, int quantity) {
         if(!scannedItems.containsKey(item)){
             scannedItems.put(item, quantity);
         }else{
-            int currentQuantity = scannedItems.get(item); // If the item exists, get its current quantity
-        scannedItems.put(item, currentQuantity + quantity); // Update the quantity by adding the new quantity
-    }
-        totalPrice+=item.getPrice();
-        //totalVAT+=item.getVAT();
+            int currentQuantity = scannedItems.get(item);
+            scannedItems.put(item, currentQuantity + quantity);   
+        }
+        totalPrice = totalPrice.add(new Amount(item.getPrice().getValue() * quantity));
+
     }
 
-    public double applyTotalDiscount(double discount){
-        if(totalPrice-discount<=0){
-            totalPriceAfterDiscount = 0;
+    private void calculateTotalVAT() {
+        for (Map.Entry<itemDTO, Integer> entry : scannedItems.entrySet()) {
+            itemDTO currentItem = entry.getKey();
+            int quantity = entry.getValue();
+            double itemVATAmount = (currentItem.getPrice().getValue()*quantity)* (currentItem.getVAT().getValue() / 100);
+            totalVAT = totalVAT.add(new Amount(itemVATAmount));
+        }
+    }
+
+    /**
+     * Applies a total discount to the total price of the sale.
+     * @param discount The discount amount to apply.
+     * @return The total price after applying the discount.
+     */
+    public Amount applyTotalDiscount(Amount discount){
+        if(totalPrice.subtract(discount).getValue() <= 0){
+            totalPriceAfterDiscount = new Amount(0);
         }else{
-            totalPriceAfterDiscount = totalPrice-discount;
+            //totalPriceAfterDiscount = totalPrice - discount;
+            totalPriceAfterDiscount = totalPrice.subtract(discount);
         }
         return totalPriceAfterDiscount;
     }
+
+    /**
+     * Ends the sale by processing the payment and printing the receipt.
+     * @param amount The amount tendered by the customer.
+     * @return The payment object representing the transaction.
+     */
     public Payment endSale(double amount){
-        // 1.1.1
         Payment payment = new Payment(amount, totalPrice);
-        //1.1.2
-        // Here a saleDTO would be useful, but only nedded here. 
-        Receipt receipt = new Receipt(payment, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems, time);
-        //1.1.3
+        Receipt receipt = new Receipt(payment, this);
+        //Receipt receipt = new Receipt(payment, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems, time);
         ReceiptPrinter.printReceipt(receipt);
-        
         return payment;
+    }
+
+
+    public Amount getTotalPrice() {
+        return totalPrice;
+    }
+
+    public Amount getTotalVAT() {
+        calculateTotalVAT();
+        return totalVAT;
+    }
+
+    public Amount getTotalPriceAfterDiscount() {
+        return totalPriceAfterDiscount;
+    }
+
+    public LinkedHashMap<itemDTO, Integer> getScannedItems() {
+        return scannedItems;
+    }
+
+    public Date getTime() {
+        return time;
     }
 }
