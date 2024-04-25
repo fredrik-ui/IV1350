@@ -16,10 +16,6 @@ import se.kth.IV1350.integration.itemDTO;
 public class Sale {
 
     //private LocalDateTime time;
-    private Date time;
-    private Amount totalPrice;
-    private Amount totalVAT; 
-    private Amount totalPriceAfterDiscount; 
     //private LinkedHashMap<itemDTO, Integer> scannedItems = new LinkedHashMap<>();
     private ArrayList<ItemAndQuantity> scannedItems = new ArrayList<>();
     private saleDTO DTO;
@@ -28,32 +24,37 @@ public class Sale {
      * Constructs a new Sale object and sets the start time of the sale.
      */
     public Sale(){
-        setTimeOfSale();
         this.DTO = new saleDTO(this);
-
     }
 
     /**
      * Sets the time of sale to the current system time.
      */
-    public void setTimeOfSale(){
-        time = new Date();
-    }
 
     /**
      * Checks if an item with the specified ID already exists in the sale.
      * @param itemID The ID of the item to check for duplicates.
      * @return The item if found, otherwise null.
      */
-    public itemDTO checkForDuplicate(int itemID) {
-        for (Map.Entry<itemDTO, Integer> entry : scannedItems.entrySet()) {
-            itemDTO currentItem = entry.getKey();
+
+     public itemDTO checkForDuplicate(int itemID) {
+        for (ItemAndQuantity item : scannedItems) {
+            itemDTO currentItem = item .getItemDTO();
             if (currentItem.getItemID() == itemID) {
                 return currentItem; // Item with the given ID found, return that item
             }
         }
         return null; 
     }
+     // public itemDTO checkForDuplicate(int itemID) {
+    //     for (Map.Entry<itemDTO, Integer> entry : scannedItems.entrySet()) {
+    //         itemDTO currentItem = entry.getKey();
+    //         if (currentItem.getItemID() == itemID) {
+    //             return currentItem; // Item with the given ID found, return that item
+    //         }
+    //     }
+    //     return null; 
+    // }
 
     /**
      * Adds an item to the sale with the specified quantity.
@@ -61,20 +62,46 @@ public class Sale {
      * @param item The item to add to the sale.
      * @param quantity The quantity of the item to add.
      */
-    public void additemToSale(itemDTO item, int quantity) {
-        if(!scannedItems.containsKey(item)){
-            //scannedItems.put(item, quantity);
+
+     public void additemToSale(itemDTO item, int quantity) {
+        if(scannedItems.isEmpty()) {
             DTO.setScannedItems(item, quantity, 0);
-        }else{
-            int currentQuantity = scannedItems.get(item);
-            DTO.setScannedItems(item,currentQuantity,quantity);
-            //scannedItems.put(item, currentQuantity + quantity);   
+        } else {
+            for (ItemAndQuantity scannedItem : scannedItems) {
+                if (scannedItem.getItemDTO().equals(item)) {
+                    int currentQuantity = scannedItem.getQuantity();
+                    DTO.setScannedItems(item, currentQuantity, quantity);
+                } else {
+                    DTO.setScannedItems(item, quantity, 0);
+                }
+
+            }
         }
         DTO.setTotalPrice(item, quantity);
         DTO.setTotalVAT();
-        //totalPrice = totalPrice.add(new Amount(item.getPrice().getValue() * quantity));
+    }  
 
-    }    
+    // public void additemToSale(itemDTO item, int quantity) {
+    //     boolean found = false;
+    //     for (ItemAndQuantity scannedItem : scannedItems) {
+    //         if (scannedItem.getItemDTO().equals(item)) {
+    //             // If item already exists, update its quantity
+    //             int currentQuantity = scannedItem.getQuantity();
+    //             scannedItems.remove(scannedItem);
+    //             DTO.setScannedItems(item, currentQuantity, quantity);
+    //             found = true;
+    //             break;
+    //         }
+    //     }
+    //     if (!found) {
+    //         DTO.setScannedItems(item, 0, quantity);
+    //     }
+    //             //DTO.lengthScannedItem();
+    //             DTO.setTotalPrice(item, quantity);
+    //             DTO.setTotalVAT();    
+    // }
+
+    // }    
     // public void additemToSale(itemDTO item, int quantity) {
     //     if(!scannedItems.containsKey(item)){
     //         scannedItems.put(item, quantity);
@@ -85,7 +112,6 @@ public class Sale {
     //     totalPrice = totalPrice.add(new Amount(item.getPrice().getValue() * quantity));
 
     // }
-    // I DTO känns mest rimligt???
 
 
     /**
@@ -117,6 +143,10 @@ public class Sale {
         //Receipt receipt = new Receipt(payment, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems, time);
         ReceiptPrinter.printReceipt(receipt);
         return payment;
+    }
+
+    public saleDTO getDTO(){
+        return DTO;
     }
 
 

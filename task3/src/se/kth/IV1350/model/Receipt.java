@@ -2,6 +2,7 @@ package se.kth.IV1350.model;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -13,7 +14,8 @@ public class Receipt {
     private Amount totalPrice;
     private Amount totalVAT;
     private Amount totalPriceAfterDiscount;
-    private LinkedHashMap<itemDTO, Integer> scannedItems;   
+    //private LinkedHashMap<itemDTO, Integer> scannedItems;   
+    private ArrayList<ItemAndQuantity> scannedItems = new ArrayList<>();
     private Date time; 
 
     // public Receipt(Payment payment, double totalPrice, double totalVAT, double totalPriceAfterDiscount, LinkedHashMap<itemDTO, Integer> scannedItems, LocalDateTime time) {
@@ -43,21 +45,27 @@ public class Receipt {
         sb.append("-------------Receipt--------------\n\n");
         sb.append("Time of sale: ").append(time).append("\n\n");
         //sb.append("Scanned Items:\n");
-        for (Map.Entry<itemDTO, Integer> entry : scannedItems.entrySet()) {
-            itemDTO item = entry.getKey();
-            int quantity = entry.getValue();
-            sb.append(item.getName()).append("\t\t"+quantity).append(" x ").append(item.getPrice().getValue());
-            sb.append(" \t"+item.getPrice().getValue() * quantity+" SEK\n");
-            // sb.append("Add ").append(quantity).append(" item with id ").append(item.getItemID()).append(":\n");
-            // sb.append("Itemd ID: ").append(item.getItemID()).append("\n");
-            // sb.append("Item name: ").append(item.getName()).append("\n");
-            // sb.append("Item cost: ").append(item.getPrice()).append(" SEK\n");
-            // sb.append("VAT: ").append(item.getVAT()).append("\n");
-            // sb.append("Item description: ").append(item.getDescription()).append("\n");
-            // sb.append("Total cost: (including VAT): ").append("INFO ABOUT TOTAL COST ").append("\n");
-            // sb.append("---------------------------\n");
-            //sb.append(" (Quantity: ").append(quantity).append(")\n");
+        // for (Map.Entry<itemDTO, Integer> entry : scannedItems.entrySet()) {
+        //     itemDTO item = entry.getKey();
+        //     int quantity = entry.getValue();
+        //     sb.append(item.getName()).append("\t\t"+quantity).append(" x ").append(item.getPrice().getValue());
+        //     sb.append(" \t"+item.getPrice().getValue() * quantity+" SEK\n");
+        //     // sb.append("Add ").append(quantity).append(" item with id ").append(item.getItemID()).append(":\n");
+        //     // sb.append("Itemd ID: ").append(item.getItemID()).append("\n");
+        //     // sb.append("Item name: ").append(item.getName()).append("\n");
+        //     // sb.append("Item cost: ").append(item.getPrice()).append(" SEK\n");
+        //     // sb.append("VAT: ").append(item.getVAT()).append("\n");
+        //     // sb.append("Item description: ").append(item.getDescription()).append("\n");
+        //     // sb.append("Total cost: (including VAT): ").append("INFO ABOUT TOTAL COST ").append("\n");
+        //     // sb.append("---------------------------\n");
+        //     //sb.append(" (Quantity: ").append(quantity).append(")\n");
+        // }
+        for(ItemAndQuantity item : scannedItems){
+            sb.append(item.getItemDTO().getName()).append("\t\t"+item.getQuantity()).append(" x ").append(item.getItemDTO().getPrice().getValue());
+            sb.append(" \t"+item.getItemDTO().getPrice().getValue()*item.getQuantity()+" SEK\n");
         }
+
+
         //sb.append("Total: ").append(totalPrice.getValue());
         sb.append("\nTotal: ").append(totalPriceAfterDiscount.getValue());
         sb.append("\nDiscount: ").append(totalPrice.getValue()-totalPriceAfterDiscount.getValue()+" SEK");
