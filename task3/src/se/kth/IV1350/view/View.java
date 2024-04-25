@@ -1,7 +1,6 @@
 package se.kth.IV1350.view;
 
 import se.kth.IV1350.controller.Controller;
-import se.kth.IV1350.integration.itemDTO;
 import se.kth.IV1350.model.saleDTO;
 
 

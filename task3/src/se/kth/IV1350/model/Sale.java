@@ -1,9 +1,6 @@
 package se.kth.IV1350.model;
 
-import java.util.LinkedHashMap;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Date;
 
 import se.kth.IV1350.integration.ReceiptPrinter;
 import se.kth.IV1350.integration.itemDTO;
@@ -15,7 +12,6 @@ import se.kth.IV1350.integration.itemDTO;
  */
 public class Sale {
 
-    //private LocalDateTime time;
     //private LinkedHashMap<itemDTO, Integer> scannedItems = new LinkedHashMap<>();
     private ArrayList<ItemAndQuantity> scannedItems = new ArrayList<>();
     private saleDTO DTO;
@@ -148,26 +144,4 @@ public class Sale {
     public saleDTO getDTO(){
         return DTO;
     }
-
-
-    // public Amount getTotalPrice() {
-    //     return totalPrice;
-    // }
-
-    // public Amount getTotalVAT() {
-    //     calculateTotalVAT();
-    //     return totalVAT;
-    // }
-
-    // public Amount getTotalPriceAfterDiscount() {
-    //     return totalPriceAfterDiscount;
-    // }
-
-    // public LinkedHashMap<itemDTO, Integer> getScannedItems() {
-    //     return scannedItems;
-    // }
-
-    // public Date getTime() {
-    //     return time;
-    // }
 }

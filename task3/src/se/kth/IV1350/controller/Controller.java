@@ -16,7 +16,6 @@ public class Controller {
     private Sale sale;
 
     public Controller(ExternalDB exDB, ReceiptPrinter printer) {
-        // this.cashRegister = new CashRegister();
         this.cashRegister = new CashRegister();
         this.externalSystems = exDB;
     }
@@ -24,28 +23,6 @@ public class Controller {
     public void startSale() {
         sale = new Sale();
     }
-
-    // public itemDTO scanItem(int itemID, int quantity) {
-
-    //     // 1.1
-    //     itemDTO item = sale.checkForDuplicate(itemID);
-
-    //     if (item == null) {
-    //         // 1.3
-    //         item = externalSystems.getInventorySystem().getItemFromDB(itemID);
-    //         if (item == null)
-    //             // An error should be thrown
-    //             return null;
-    //         sale.additemToSale(item, quantity);
-    //     } else {
-    //         // 1.2
-    //         sale.additemToSale(item, quantity);
-    //     }
-
-    //     // return an item
-    //     return item;
-    // }
-
     public saleDTO scanItemAndGetSaleDTO(int itemID, int quantity) {
         itemDTO item = sale.checkForDuplicate(itemID);
     
@@ -61,22 +38,6 @@ public class Controller {
     
         return sale.getDTO();
     }
-
-    // public saleDTO scanItemAndGetSaleDTO(int itemID, int quantity) {
-    // itemDTO item = sale.checkForDuplicate(itemID);
-
-    // if (item == null) {
-    // item = externalSystems.getInventorySystem().getItemFromDB(itemID);
-    // if (item == null)
-    // return null; // An error should be thrown
-    // sale.additemToSale(item, quantity);
-    // } else {
-    // sale.additemToSale(item, quantity);
-    // }
-
-    // return getSaleDTO();
-    // }
-
     public double startDiscount(int customerID) {
         Amount discount = externalSystems.getDiscountDBSystem().getDiscount(customerID, sale);
         double newPrice = sale.applyTotalDiscount(discount).getValue();
@@ -85,7 +46,8 @@ public class Controller {
 
     public Payment enterPayemnt(double amount) {
         Payment change = sale.endSale(amount);
-        // externalSystems.updateDB();
+        externalSystems.getAccountingSystem().updateAccounting();
+        externalSystems.getInventorySystem().updateInventory();
         cashRegister.addPayment(change);
         return change;
     }
