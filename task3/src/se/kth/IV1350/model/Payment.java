@@ -1,5 +1,4 @@
 package se.kth.IV1350.model;
-import se.kth.IV1350.model.Amount;
 
 public class Payment {
 

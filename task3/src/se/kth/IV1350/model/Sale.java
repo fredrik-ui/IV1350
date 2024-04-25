@@ -1,11 +1,13 @@
 package se.kth.IV1350.model;
 
 import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Date;
 
 import se.kth.IV1350.integration.ReceiptPrinter;
 import se.kth.IV1350.integration.itemDTO;
+
 
 
 /**
@@ -18,15 +20,16 @@ public class Sale {
     private Amount totalPrice;
     private Amount totalVAT; 
     private Amount totalPriceAfterDiscount; 
-    private LinkedHashMap<itemDTO, Integer> scannedItems = new LinkedHashMap<>();
+    //private LinkedHashMap<itemDTO, Integer> scannedItems = new LinkedHashMap<>();
+    private ArrayList<ItemAndQuantity> scannedItems = new ArrayList<>();
+    private saleDTO DTO;
 
     /**
      * Constructs a new Sale object and sets the start time of the sale.
      */
     public Sale(){
         setTimeOfSale();
-        this.totalPrice = new Amount();
-        this.totalVAT = new Amount(0);
+        this.DTO = new saleDTO(this);
 
     }
 
@@ -60,23 +63,30 @@ public class Sale {
      */
     public void additemToSale(itemDTO item, int quantity) {
         if(!scannedItems.containsKey(item)){
-            scannedItems.put(item, quantity);
+            //scannedItems.put(item, quantity);
+            DTO.setScannedItems(item, quantity, 0);
         }else{
             int currentQuantity = scannedItems.get(item);
-            scannedItems.put(item, currentQuantity + quantity);   
+            DTO.setScannedItems(item,currentQuantity,quantity);
+            //scannedItems.put(item, currentQuantity + quantity);   
         }
-        totalPrice = totalPrice.add(new Amount(item.getPrice().getValue() * quantity));
+        DTO.setTotalPrice(item, quantity);
+        DTO.setTotalVAT();
+        //totalPrice = totalPrice.add(new Amount(item.getPrice().getValue() * quantity));
 
-    }
+    }    
+    // public void additemToSale(itemDTO item, int quantity) {
+    //     if(!scannedItems.containsKey(item)){
+    //         scannedItems.put(item, quantity);
+    //     }else{
+    //         int currentQuantity = scannedItems.get(item);
+    //         scannedItems.put(item, currentQuantity + quantity);   
+    //     }
+    //     totalPrice = totalPrice.add(new Amount(item.getPrice().getValue() * quantity));
 
-    private void calculateTotalVAT() {
-        for (Map.Entry<itemDTO, Integer> entry : scannedItems.entrySet()) {
-            itemDTO currentItem = entry.getKey();
-            int quantity = entry.getValue();
-            double itemVATAmount = (currentItem.getPrice().getValue()*quantity)* (currentItem.getVAT().getValue() / 100);
-            totalVAT = totalVAT.add(new Amount(itemVATAmount));
-        }
-    }
+    // }
+    // I DTO känns mest rimligt???
+
 
     /**
      * Applies a total discount to the total price of the sale.
@@ -84,13 +94,16 @@ public class Sale {
      * @return The total price after applying the discount.
      */
     public Amount applyTotalDiscount(Amount discount){
-        if(totalPrice.subtract(discount).getValue() <= 0){
-            totalPriceAfterDiscount = new Amount(0);
+        if(DTO.getTotalPrice().subtract(discount).getValue()<= 0){
+            
+            DTO.setTotalPriceAfterDiscount(new Amount(0));
+            //totalPriceAfterDiscount = new Amount(0);
         }else{
             //totalPriceAfterDiscount = totalPrice - discount;
-            totalPriceAfterDiscount = totalPrice.subtract(discount);
+            DTO.setTotalPriceAfterDiscount(discount);
+            //totalPriceAfterDiscount = totalPrice.subtract(discount);
         }
-        return totalPriceAfterDiscount;
+        return DTO.getTotalPriceAfterDiscount();
     }
 
     /**
@@ -99,32 +112,32 @@ public class Sale {
      * @return The payment object representing the transaction.
      */
     public Payment endSale(double amount){
-        Payment payment = new Payment(amount, totalPrice);
-        Receipt receipt = new Receipt(payment, this);
+        Payment payment = new Payment(amount, DTO.getTotalPrice());
+        Receipt receipt = new Receipt(payment, DTO);
         //Receipt receipt = new Receipt(payment, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems, time);
         ReceiptPrinter.printReceipt(receipt);
         return payment;
     }
 
 
-    public Amount getTotalPrice() {
-        return totalPrice;
-    }
+    // public Amount getTotalPrice() {
+    //     return totalPrice;
+    // }
 
-    public Amount getTotalVAT() {
-        calculateTotalVAT();
-        return totalVAT;
-    }
+    // public Amount getTotalVAT() {
+    //     calculateTotalVAT();
+    //     return totalVAT;
+    // }
 
-    public Amount getTotalPriceAfterDiscount() {
-        return totalPriceAfterDiscount;
-    }
+    // public Amount getTotalPriceAfterDiscount() {
+    //     return totalPriceAfterDiscount;
+    // }
 
-    public LinkedHashMap<itemDTO, Integer> getScannedItems() {
-        return scannedItems;
-    }
+    // public LinkedHashMap<itemDTO, Integer> getScannedItems() {
+    //     return scannedItems;
+    // }
 
-    public Date getTime() {
-        return time;
-    }
+    // public Date getTime() {
+    //     return time;
+    // }
 }

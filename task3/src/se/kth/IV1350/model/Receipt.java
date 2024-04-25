@@ -26,13 +26,13 @@ public class Receipt {
     // }
 
 
-    public Receipt(Payment payment, Sale sale) {
+    public Receipt(Payment payment, saleDTO dTO) {
         this.payment = payment;
-        this.totalPrice = sale.getTotalPrice();
-        this.totalVAT = sale.getTotalVAT();
-        this.totalPriceAfterDiscount = sale.getTotalPriceAfterDiscount();
-        this.scannedItems = sale.getScannedItems();
-        this.time = sale.getTime();
+        this.totalPrice = dTO.getTotalPrice();
+        this.totalVAT = dTO.getTotalVAT();
+        this.totalPriceAfterDiscount = dTO.getTotalPriceAfterDiscount();
+        this.scannedItems = dTO.getScannedItems();
+        this.time = dTO.getTime();
 
     }
 

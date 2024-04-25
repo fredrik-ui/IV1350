@@ -7,19 +7,19 @@ import se.kth.IV1350.model.Amount;
 import se.kth.IV1350.model.CashRegister;
 import se.kth.IV1350.model.Payment;
 import se.kth.IV1350.model.Sale;
+import se.kth.IV1350.model.saleDTO;
 
 
 public class Controller{
     
     private ExternalDB externalSystems;
-    //private ReceiptPrinter printer;
+    private CashRegister cashRegister;
     private Sale sale;
-    //private int customerID;
 
     public Controller(ExternalDB exDB, ReceiptPrinter printer){
-        CashRegister cashRegister = new CashRegister();
+        //this.cashRegister = new CashRegister();
+        this.cashRegister = new CashRegister();
         this.externalSystems = exDB;
-        //this.printer = printer;
     }
 
     public void startSale(){
@@ -28,7 +28,6 @@ public class Controller{
 
     public itemDTO scanItem(int itemID, int quantity){
         
-        // First check if the item exist in the sale; 
         // 1.1
         itemDTO item = sale.checkForDuplicate(itemID);
 
@@ -48,6 +47,27 @@ public class Controller{
         return item;
     }
 
+    public saleDTO getSaleDTO() {
+        return new saleDTO(sale);
+    }
+
+
+    public saleDTO scanItemAndGetSaleDTO(int itemID, int quantity) {
+        itemDTO item = sale.checkForDuplicate(itemID);
+    
+        if (item == null) {
+            item = externalSystems.getInventorySystem().getItemFromDB(itemID);
+            if (item == null)
+                return null; // An error should be thrown
+            sale.additemToSale(item, quantity);
+        } else {
+            sale.additemToSale(item, quantity);
+        }
+    
+        return getSaleDTO();
+    }
+
+
     public double startDiscount(int customerID){
         Amount discount = externalSystems.getDiscountDBSystem().getDiscount(customerID, sale);
         double newPrice = sale.applyTotalDiscount(discount).getValue();
@@ -56,6 +76,8 @@ public class Controller{
 
     public Payment enterPayemnt(double amount){
         Payment change = sale.endSale(amount);
+        //externalSystems.updateDB();
+        cashRegister.addPayment(change);
         return change;
     }
 
