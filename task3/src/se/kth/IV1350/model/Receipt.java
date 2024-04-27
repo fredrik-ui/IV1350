@@ -24,6 +24,13 @@ public class Receipt {
 
     }
 
+    /**
+     * Returns a string representation of the receipt, including the time of sale,
+     * scanned items, total price, discount, VAT, payment amount, change, and
+     * change to give to the customer.
+     *
+     * @return         	a string representation of the receipt
+     */
     @Override
     public String toString() {
         //System.out.println(totalVAT);
@@ -34,7 +41,7 @@ public class Receipt {
             sb.append(item.getItemDTO().getName()).append("\t\t"+item.getQuantity()).append(" x ").append(item.getItemDTO().getPrice().getValue());
             sb.append(" \t"+item.getItemDTO().getPrice().getValue()*item.getQuantity()+" SEK\n");
         }
-        sb.append("\nTotal: ").append(totalPriceAfterDiscount.getValue());
+        sb.append("\nTotal: ").append(totalPrice.getValue());
         sb.append("\nDiscount: ").append(totalPrice.getValue()-totalPriceAfterDiscount.getValue()+" SEK");
         sb.append("\nVAT: ").append(totalVAT.getValue());
         sb.append("\n\nPayemnt: ").append(payment.getTotalAmountPaid()).append(" SEK");

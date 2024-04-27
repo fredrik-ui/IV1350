@@ -20,32 +20,62 @@ public class Controller {
         this.externalSystems = exDB;
     }
 
+    /**
+    * Starts a new sale by initializing a new Sale object.
+    */
     public void startSale() {
         sale = new Sale();
     }
-    public saleDTO scanItemAndGetSaleDTO(int itemID, int quantity) {
-        itemDTO item = sale.checkForDuplicate(itemID);
-    
-        if (item == null) {
-            item = externalSystems.getInventorySystem().getItemFromDB(itemID);
-            if (item == null){
-                return null; // An error should be thrown
-            }
-            sale.additemToSale(item, quantity);
-        } else {
-            sale.additemToSale(item, quantity);
-        }
-    
+
+    public saleDTO getSaleDTO(){     
         return sale.getDTO();
     }
+    /**
+     * Scans an item with the given item ID and quantity, and returns the sale DTO after adding the item to the sale.
+     *
+     * @param  itemID   the ID of the item to be scanned
+     * @param  quantity the quantity of the item to be scanned
+     * @return          the sale DTO after adding the item to the sale, or null if an error occurs
+     */
+    public saleDTO scanItemAndGetSaleDTO(int itemID, int quantity) {
+        itemDTO collectedItem = sale.checkForDuplicateItem(itemID);
+        
+        if (collectedItem == null) {
+            collectedItem = externalSystems.getInventorySystem().getItemFromDB(itemID);
+            if (collectedItem == null){
+                return null; // An error should be thrown
+            }
+            // NYTT ITEM ATT LÄGGA IN
+            sale.additemToSale(collectedItem, quantity, false);
+        } else {
+            // DUBBLET
+            sale.additemToSale(collectedItem, quantity, true);
+        }
+    
+        return getSaleDTO();
+    }
+    /**
+     * Calculates the discount for a customer and returns the new price after applying the discount.
+     *
+     * @param  customerID  the ID of the customer
+     * @return             the new price after applying the discount
+     */
     public double startDiscount(int customerID) {
         Amount discount = externalSystems.getDiscountDBSystem().getDiscount(customerID, sale);
         double newPrice = sale.applyTotalDiscount(discount).getValue();
         return newPrice;
     }
-
+    /**
+     * Ends the sale by processing the payment and updating the accounting and inventory systems.
+     *
+     * @param  amount  the amount tendered by the customer
+     * @return         the payment object representing the transaction, or null if the amount paid is less than the total price
+     */
     public Payment enterPayemnt(double amount) {
         Payment change = sale.endSale(amount);
+        if(change == null){
+            return null;
+        }
         externalSystems.getAccountingSystem().updateAccounting();
         externalSystems.getInventorySystem().updateInventory();
         cashRegister.addPayment(change);
