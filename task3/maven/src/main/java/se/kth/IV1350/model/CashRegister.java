@@ -16,8 +16,6 @@ public class CashRegister {
      * @param payment The payment to be added to the cash register.
      */
     public void addPayment(Payment payment) {
-        System.out.println(payment.getTotalAmountPaid().getValue());
-        System.out.println(payment.getTotalChange().getValue());
         cashInRegister = cashInRegister.add(new Amount(payment.getTotalAmountPaid().getValue() - payment.getTotalChange().getValue()));
     }
 

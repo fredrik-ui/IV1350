@@ -1,49 +1,40 @@
-// package se.kth.IV1350.model;
+package se.kth.IV1350.model;
 
-// import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
-// import org.junit.jupiter.api.AfterEach;
-// import org.junit.jupiter.api.BeforeEach;
-// import org.junit.jupiter.api.Test;
+class AmountTest {
 
-// public class AmountTest {
-//     private Amount amountInstance;
+    @Test
+    void testAdd() {
+        Amount amount1 = new Amount(10.0);
+        Amount amount2 = new Amount(5.0);
+        assertEquals(15, amount1.add(amount2).getValue());
+    }
 
-//     @BeforeEach
-//     void setUp(){
-//         amountInstance = new Amount(10);
-//     }
+    @Test
+    void testSubtract() {
+        Amount amount1 = new Amount(10.0);
+        Amount amount2 = new Amount(5.0);
+        assertEquals(5, amount1.subtract(amount2).getValue());
+    }
 
-//     @AfterEach
-//     void tearDown(){
-//         amountInstance = new Amount(0); // Reset the amountInstance to 0
-//     }
+    @Test
+    void testMultiply() {
+        Amount amount1 = new Amount(10.0);
+        Amount amount2 = new Amount(5.0);;
+        assertEquals(50, amount1.multiply(amount2).getValue());
+    }
 
-//     @Test
-//     public void testAmountConstructor() {
-//         double amount = 100.0;
-//         amountInstance = new Amount(amount);
-//         assertEquals(100, amountInstance.getValue(), "The amount is different from expected value");
-//     }
+    @Test
+    void testConstructor() {
+        Amount amount = new Amount();
+        assertEquals(0.0, amount.getValue());
+    }
 
-//     @Test
-//     public void testAdd() {
-//         Amount amount = new Amount(100);
-//         Amount newAmount = amount.add(amountInstance);
-//         assertEquals(110, newAmount.getValue(), "The new amount is not calculated correctly");
-//     }
-    
-//     @Test
-//     public void testSubtract() {
-//         Amount amount = new Amount(5);
-//         Amount newAmount = amountInstance.subtract(amount);
-//         assertEquals(5, newAmount.getValue(), "The new amount is not calculated correctly");
-//     }
-    
-//     @Test
-//     public void testMultiply() {
-//         Amount amount = new Amount(2);
-//         Amount newAmount = amountInstance.multiply(amount);
-//         assertEquals(20, newAmount.getValue(), "The new amount is not calculated correctly");
-//     }
-// }
+    @Test
+    void testConstructorWithValue() {
+        Amount amount = new Amount(5.0);
+        assertEquals(5.0, amount.getValue());
+    }
+}

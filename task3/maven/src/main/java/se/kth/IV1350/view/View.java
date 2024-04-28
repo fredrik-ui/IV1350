@@ -27,20 +27,17 @@ public class View{
         saleDTO item = contr.scanItem(1, 2);
         printer(item, 1);
 
-        // item = contr.scanItem(2, 1);
-        // printer(item,2);
+        item = contr.scanItem(2, 1);
+        printer(item,2);
 
-        // item = contr.scanItem(1, 1);
-        // printer(item,1);
-
-        // item = contr.scanItem(2, 4);
-        // printer(item,2);
+        item = contr.scanItem(1, 1);
+        printer(item,1);
 
         double newPrice = contr.startDiscount(1);
         System.out.println("Discount started, price before: "+item.getTotalPrice().getValue()+"SEK");
         System.out.println("Price after discount: "+newPrice+"SEK");
-        Payment change = contr.enterPayemnt(4100);
-        System.out.println("User has paid: "+change.getTotalAmountPaid()+"SEK, and the change is: "+change.getTotalChange()+"SEK");
+        Payment change = contr.enterPayemnt(200);
+        System.out.println("User has paid: "+change.getTotalAmountPaid().getValue()+"SEK, and the change is: "+change.getTotalChange().getValue()+"SEK");
     }
     /**
      * Prints the details of a sale item to the console.
