@@ -68,7 +68,6 @@ public class Sale {
             }
         }
         if (!exist) {
-            System.out.println(item.getName());
             scannedItems.add(new ItemAndQuantity(item, quantity));
         }
         updateTotalCost(item, quantity);
