@@ -27,6 +27,14 @@ public class Controller {
         sale = new Sale();
     }
 
+    public Sale getSale(){
+        return sale;
+    }
+
+    public CashRegister getCashRegister(){
+        return this.cashRegister;
+    }
+
     public saleDTO getSaleDTO(){     
         return sale.getDTO();
     }
@@ -37,18 +45,16 @@ public class Controller {
      * @param  quantity the quantity of the item to be scanned
      * @return          the sale DTO after adding the item to the sale, or null if an error occurs
      */
-    public saleDTO scanItemAndGetSaleDTO(int itemID, int quantity) {
+    public saleDTO scanItem(int itemID, int quantity) {
+        if(quantity <= 0){
+            return null; // Error
+        }
         itemDTO collectedItem = sale.checkForDuplicateItem(itemID);
         
         if (collectedItem == null) {
             collectedItem = externalSystems.getInventorySystem().getItemFromDB(itemID);
-            if (collectedItem == null){
-                return null; // An error should be thrown
-            }
-            // NYTT ITEM ATT LÄGGA IN
             sale.additemToSale(collectedItem, quantity, false);
         } else {
-            // DUBBLET
             sale.additemToSale(collectedItem, quantity, true);
         }
     

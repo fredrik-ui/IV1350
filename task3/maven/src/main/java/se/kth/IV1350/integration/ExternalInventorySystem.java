@@ -11,7 +11,7 @@ public class ExternalInventorySystem {
 
     public ExternalInventorySystem(){
         items.add(new itemDTO(1, "Korv", new Amount(10), new Amount(5), "60% kötthalt"));
-        items.add(new itemDTO(2, "Mjölk", new Amount(20), new Amount(5), "Mejeir produkt"));
+        items.add(new itemDTO(2, "Mjölk", new Amount(20), new Amount(5), "Mejeri produkt"));
         items.add(new itemDTO(3, "Pasta", new Amount(15), new Amount(5), "Gjort på durum vete"));
 
     }

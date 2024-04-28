@@ -6,8 +6,8 @@ package se.kth.IV1350.model;
 
 public class Payment {
 
-    double totalAmountPaid;
-    double totalChange;
+    Amount totalAmountPaid;
+    Amount totalChange;
 
     /**
      * Constructs a new instance of Payment.
@@ -17,7 +17,7 @@ public class Payment {
      */
 
     public Payment(double amount, Amount totalPrice) {
-        this.totalAmountPaid = amount;
+        this.totalAmountPaid = new Amount(amount);
 
         totalChange = calculateChange(amount, totalPrice);
     }
@@ -29,18 +29,18 @@ public class Payment {
      * @param  totalPrice     the total price of the items
      * @return                the change to be returned to the customer, or -1 if the amount paid is less than the total price
      */
-    private double calculateChange(double amount, Amount totalPrice){
+    private Amount calculateChange(double amount, Amount totalPrice){
         if(amount >= totalPrice.getValue()){
-            return amount - totalPrice.getValue(); // Calculate change only if amount is greater than or equal to totalPrice
+            return new Amount(amount - totalPrice.getValue());
         } else {
-            return -1; // THROW AN ERROR HERE FOR NEXT SEMINARE
+            return null;
         }        
     }
 
-    public double getTotalAmountPaid(){
+    public Amount getTotalAmountPaid(){
         return this.totalAmountPaid;
     }
-    public double getTotalChange(){
+    public Amount getTotalChange(){
         return this.totalChange;
     }
 }

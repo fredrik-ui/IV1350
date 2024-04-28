@@ -1,1 +1,8 @@
-se\kth\IV1350\AppTest.class
+se\kth\IV1350\model\SaleTest.class
+se\kth\IV1350\model\ItemAndQuantityTest.class
+se\kth\IV1350\startup\MainTest.class
+se\kth\IV1350\controller\ControllerTest.class
+se\kth\IV1350\model\PaymentTest.class
+se\kth\IV1350\model\CashRegisterTest.class
+se\kth\IV1350\model\ReceiptTest.class
+se\kth\IV1350\view\ViewTest.class

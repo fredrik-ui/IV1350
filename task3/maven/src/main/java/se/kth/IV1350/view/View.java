@@ -1,6 +1,7 @@
 package se.kth.IV1350.view;
 
 import se.kth.IV1350.controller.Controller;
+import se.kth.IV1350.model.Payment;
 import se.kth.IV1350.model.saleDTO;
 
 
@@ -23,20 +24,23 @@ public class View{
     public void run() {
         contr.startSale();
         System.out.println();
-        saleDTO item = contr.scanItemAndGetSaleDTO(1, 2);
+        saleDTO item = contr.scanItem(1, 2);
         printer(item, 1);
 
-        item = contr.scanItemAndGetSaleDTO(2, 1);
-        printer(item,2);
+        // item = contr.scanItem(2, 1);
+        // printer(item,2);
 
-        item = contr.scanItemAndGetSaleDTO(1, 1);
-        printer(item,1);
+        // item = contr.scanItem(1, 1);
+        // printer(item,1);
 
-        item = contr.scanItemAndGetSaleDTO(2, 4);
-        printer(item,2);
+        // item = contr.scanItem(2, 4);
+        // printer(item,2);
 
-        contr.startDiscount(1);
-        contr.enterPayemnt(100);
+        double newPrice = contr.startDiscount(1);
+        System.out.println("Discount started, price before: "+item.getTotalPrice().getValue()+"SEK");
+        System.out.println("Price after discount: "+newPrice+"SEK");
+        Payment change = contr.enterPayemnt(4100);
+        System.out.println("User has paid: "+change.getTotalAmountPaid()+"SEK, and the change is: "+change.getTotalChange()+"SEK");
     }
     /**
      * Prints the details of a sale item to the console.

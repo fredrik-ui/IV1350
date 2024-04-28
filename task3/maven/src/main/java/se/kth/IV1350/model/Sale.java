@@ -1,7 +1,8 @@
 package se.kth.IV1350.model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import se.kth.IV1350.integration.ReceiptPrinter;
 import se.kth.IV1350.integration.itemDTO;
@@ -10,11 +11,10 @@ import se.kth.IV1350.integration.itemDTO;
  * Represents a sale transaction in the point of sale system.
  */
 public class Sale {
-    private Date time;
+    private String currentTime;
     private Amount totalPrice;
     private Amount totalVAT; 
     private Amount totalPriceAfterDiscount; 
-    //private LinkedHashMap<itemDTO, Integer> scannedItems = new LinkedHashMap<>();
     private ArrayList<ItemAndQuantity> scannedItems = new ArrayList<>();
     private saleDTO DTO;
 
@@ -24,12 +24,15 @@ public class Sale {
     public Sale() {
         this.totalPrice = new Amount(0);
         this.totalVAT = new Amount(0);
-        this.time = new Date();        
-        this.DTO = new saleDTO(time, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems);
+        this.totalPriceAfterDiscount = new Amount(0);
+        this.currentTime = setTime();        
+        this.DTO = new saleDTO(currentTime, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems);
     }
 
-    public Date setTime(){
-        return new Date();
+    public String setTime(){
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return currentTime.format(formatter);
     }
 
     /**
@@ -42,7 +45,7 @@ public class Sale {
         for (ItemAndQuantity item : scannedItems) {
             itemDTO currentItem = item.getItemDTO();
             if (currentItem.getItemID() == itemID) {
-                return currentItem; // Item with the given ID found, return that item
+                return currentItem;
             }
         }
         return null;
@@ -65,12 +68,17 @@ public class Sale {
             }
         }
         if (!exist) {
-            System.out.println(item.getName());;
+            System.out.println(item.getName());
             scannedItems.add(new ItemAndQuantity(item, quantity));
         }
-        totalPrice = totalPrice.add(new Amount(item.getPrice().getValue() * quantity));
+        updateTotalCost(item, quantity);
         calculateTotalVAT();
     }
+
+    private void updateTotalCost(itemDTO item, int quantity){
+        totalPrice = totalPrice.add(new Amount(item.getPrice().getValue() * quantity));
+    }
+
     private void calculateTotalVAT() {
         for(ItemAndQuantity item: scannedItems){
             itemDTO currentItem = item.getItemDTO();
@@ -89,10 +97,8 @@ public class Sale {
     public Amount applyTotalDiscount(Amount discount) {
         if (totalPrice.subtract(discount).getValue() <= 0) {
             totalPriceAfterDiscount = new Amount(0);
-            //DTO.setTotalPriceAfterDiscount(new Amount(0));
         } else {
             totalPriceAfterDiscount = this.totalPrice.subtract(discount);
-            //DTO.setTotalPriceAfterDiscount(discount);
         }
         return totalPriceAfterDiscount;
     }
@@ -103,8 +109,8 @@ public class Sale {
      * @return The payment object representing the transaction.
      */
     public Payment endSale(double amount) {
-        Payment payment = new Payment(amount, totalPrice);
-        if(payment.getTotalChange() == -1){
+        Payment payment = new Payment(amount, totalPriceAfterDiscount);
+        if(payment.getTotalChange() == null){
             System.out.println("Not enough for a payemnt");
             return null;
         }
@@ -114,7 +120,23 @@ public class Sale {
     }
 
     public saleDTO getDTO() {
-        return new saleDTO(time, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems);
+        return new saleDTO(currentTime, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems);
+    }
+
+    public Amount getTotalPrice(){
+        return totalPrice;
+    }
+
+    public Amount getTotalPriceAfterDiscount(){
+        return totalPriceAfterDiscount;
+    }
+
+    public ArrayList<ItemAndQuantity> getScannedItems(){
+        return scannedItems;
+    }
+
+    public String getTime(){
+        return currentTime;
     }
     
 }

@@ -1,7 +1,6 @@
 package se.kth.IV1350.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Receipt {
 
@@ -11,7 +10,7 @@ public class Receipt {
     private Amount totalPriceAfterDiscount;
     //private LinkedHashMap<itemDTO, Integer> scannedItems;   
     private ArrayList<ItemAndQuantity> scannedItems = new ArrayList<>();
-    private Date time; 
+    private String time; 
 
 
     public Receipt(Payment payment, saleDTO dTO) {
@@ -44,10 +43,10 @@ public class Receipt {
         sb.append("\nTotal: ").append(totalPrice.getValue());
         sb.append("\nDiscount: ").append(totalPrice.getValue()-totalPriceAfterDiscount.getValue()+" SEK");
         sb.append("\nVAT: ").append(totalVAT.getValue());
-        sb.append("\n\nPayemnt: ").append(payment.getTotalAmountPaid()).append(" SEK");
-        sb.append("\nChange: ").append(payment.getTotalChange()).append(" SEK");
+        sb.append("\n\nPayemnt: ").append(payment.getTotalAmountPaid().getValue()).append(" SEK");
+        sb.append("\nChange: ").append(payment.getTotalChange().getValue()).append(" SEK");
         sb.append("\n\n--------------END RECEIPT---------------\n");
-        sb.append("Change to give to customer: ").append(payment.getTotalChange()).append(" SEK");
+        //sb.append("Change to give to customer: ").append(payment.getTotalChange()).append(" SEK");
         return sb.toString();
     }
 }

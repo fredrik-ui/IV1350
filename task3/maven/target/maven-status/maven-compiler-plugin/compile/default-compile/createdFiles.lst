@@ -11,7 +11,6 @@ se\kth\IV1350\integration\ExternalAccountingSystem.class
 se\kth\IV1350\integration\ExternalDB.class
 se\kth\IV1350\integration\ReceiptPrinter.class
 se\kth\IV1350\integration\DiscountDB.class
-se\kth\IV1350\App.class
 se\kth\IV1350\startup\Main.class
 se\kth\IV1350\controller\Controller.class
 se\kth\IV1350\view\View.class
