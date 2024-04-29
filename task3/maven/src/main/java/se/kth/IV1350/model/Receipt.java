@@ -43,7 +43,7 @@ public class Receipt {
         sb.append("\nTotal: ").append(totalPrice.getValue());
         sb.append("\nDiscount: ").append(totalPrice.getValue()-totalPriceAfterDiscount.getValue()+" SEK");
         sb.append("\nVAT: ").append(totalVAT.getValue());
-        sb.append("\n\nPayemnt: ").append(payment.getTotalAmountPaid().getValue()).append(" SEK");
+        sb.append("\n\nPayment: ").append(payment.getTotalAmountPaid().getValue()).append(" SEK");
         sb.append("\nChange: ").append(payment.getTotalChange().getValue()).append(" SEK");
         sb.append("\n\n--------------END RECEIPT---------------\n");
         //sb.append("Change to give to customer: ").append(payment.getTotalChange()).append(" SEK");
