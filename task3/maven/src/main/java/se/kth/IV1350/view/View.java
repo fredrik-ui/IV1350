@@ -27,11 +27,11 @@ public class View{
         saleDTO item = contr.scanItem(1, 2);
         printer(item, 1);
 
-        // item = contr.scanItem(2, 1);
-        // printer(item,2);
+        item = contr.scanItem(2, 1);
+        printer(item,2);
 
-        // item = contr.scanItem(1, 1);
-        // printer(item,1);
+        item = contr.scanItem(1, 1);
+        printer(item,1);
 
         double newPrice = contr.startDiscount(1);
         System.out.println("Discount started, price before: "+item.getTotalPrice().getValue()+"SEK");

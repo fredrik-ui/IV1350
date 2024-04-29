@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: se.kth.IV1350.model.ReceiptTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in se.kth.IV1350.model.ReceiptTest
-se.kth.IV1350.model.ReceiptTest.testToStringFormatsReceiptCorrectly()  Time elapsed: 0.001 s  <<< FAILURE!
-java.lang.NullPointerException: Cannot invoke "se.kth.IV1350.model.Receipt.toString()" because "this.receiptInstance" is null
-	at se.kth.IV1350.model.ReceiptTest.testToStringFormatsReceiptCorrectly(ReceiptTest.java:37)
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in se.kth.IV1350.model.ReceiptTest

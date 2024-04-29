@@ -13,23 +13,29 @@ import se.kth.IV1350.integration.itemDTO;
 public class Sale {
     private String currentTime;
     private Amount totalPrice;
-    private Amount totalVAT; 
-    private Amount totalPriceAfterDiscount; 
+    private Amount totalVAT;
+    private Amount totalPriceAfterDiscount;
     private ArrayList<ItemAndQuantity> scannedItems = new ArrayList<>();
     private saleDTO DTO;
 
     /**
-     * Constructs a new Sale object and sets the start time of the sale.
+     * Constructs a new Sale object and initializes most of it's fields.
      */
     public Sale() {
         this.totalPrice = new Amount(0);
         this.totalVAT = new Amount(0);
         this.totalPriceAfterDiscount = new Amount(0);
-        this.currentTime = setTime();        
+        this.currentTime = setTime();
         this.DTO = new saleDTO(currentTime, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems);
     }
 
-    public String setTime(){
+    /**
+     * Sets the current time using LocalDateTime and returns it formatted as a
+     * string.
+     *
+     * @return the current time formatted as a string
+     */
+    public String setTime() {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return currentTime.format(formatter);
@@ -38,7 +44,7 @@ public class Sale {
     /**
      * Checks if an item with the specified itemID already exists in the sale.
      *
-     * @param  itemID the ID of the item to check for duplicates
+     * @param itemID the ID of the item to check for duplicates
      * @return the item if found, otherwise null
      */
     public itemDTO checkForDuplicateItem(int itemID) {
@@ -54,17 +60,18 @@ public class Sale {
     /**
      * Adds an item to the sale with the specified quantity.
      * If the item already exists in the sale, its quantity is updated.
-     * If the item does not exist in the sale, it is added with the specified quantity.
+     * If the item does not exist in the sale, it is added with the specified
+     * quantity.
      *
-     * @param  item    the item to be added to the sale
-     * @param  quantity the quantity of the item to be added
-     * @param  exist   indicates whether the item already exists in the sale
+     * @param item     the item to be added to the sale
+     * @param quantity the quantity of the item to be added
+     * @param exist    indicates whether the item already exists in the sale
      */
     public void additemToSale(itemDTO item, int quantity, boolean exist) {
         for (ItemAndQuantity scannedItem : scannedItems) {
             if (scannedItem.getItemDTO().equals(item)) {
                 int currentQuantity = scannedItem.getQuantity();
-                scannedItem.setQuantity(quantity+currentQuantity);
+                scannedItem.setQuantity(quantity + currentQuantity);
             }
         }
         if (!exist) {
@@ -74,17 +81,28 @@ public class Sale {
         calculateTotalVAT();
     }
 
-    private void updateTotalCost(itemDTO item, int quantity){
+    /**
+     * Updates the total cost by adding the cost of the given item multiplied by the
+     * quantity to the current total price.
+     *
+     * @param item     the item for which the cost is to be updated
+     * @param quantity the quantity of the item
+     */
+    private void updateTotalCost(itemDTO item, int quantity) {
         totalPrice = totalPrice.add(new Amount(item.getPrice().getValue() * quantity));
     }
 
+    /**
+     * Calculates the total VAT amount for all scanned items in the sale.
+     */
     private void calculateTotalVAT() {
-        for(ItemAndQuantity item: scannedItems){
+        for (ItemAndQuantity item : scannedItems) {
             itemDTO currentItem = item.getItemDTO();
-            double itemVATAmount = (currentItem.getPrice().getValue()*item.getQuantity())* (currentItem.getVAT().getValue() / 100);
+            double itemVATAmount = (currentItem.getPrice().getValue() * item.getQuantity())
+                    * (currentItem.getVAT().getValue() / 100);
             totalVAT = totalVAT.add(new Amount(itemVATAmount));
         }
-    
+
     }
 
     /**
@@ -101,6 +119,7 @@ public class Sale {
         }
         return totalPriceAfterDiscount;
     }
+
     /**
      * Ends the sale by processing the payment and printing the receipt.
      * 
@@ -109,7 +128,7 @@ public class Sale {
      */
     public Payment endSale(double amount) {
         Payment payment = new Payment(amount, totalPriceAfterDiscount);
-        if(payment.getTotalChange() == null){
+        if (payment.getTotalChange() == null) {
             System.out.println("Not enough for a payemnt");
             return null;
         }
@@ -118,24 +137,40 @@ public class Sale {
         return payment;
     }
 
+    /**
+     * @return a saleDTO object with the current time, total price, total VAT, total
+     *         price after discount, and scanned items
+     */
     public saleDTO getDTO() {
         return new saleDTO(currentTime, totalPrice, totalVAT, totalPriceAfterDiscount, scannedItems);
     }
 
-    public Amount getTotalPrice(){
+    /**
+     * @return the total price as an Amount object
+     */
+    public Amount getTotalPrice() {
         return totalPrice;
     }
 
-    public Amount getTotalPriceAfterDiscount(){
+    /**
+     * @return the total price after discount
+     */
+    public Amount getTotalPriceAfterDiscount() {
         return totalPriceAfterDiscount;
     }
 
-    public ArrayList<ItemAndQuantity> getScannedItems(){
+    /**
+     * @return an ArrayList of ItemAndQuantity objects
+     */
+    public ArrayList<ItemAndQuantity> getScannedItems() {
         return scannedItems;
     }
 
-    public String getTime(){
+    /**
+     * @return the current time
+     */
+    public String getTime() {
         return currentTime;
     }
-    
+
 }

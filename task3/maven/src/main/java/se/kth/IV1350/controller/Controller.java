@@ -14,7 +14,12 @@ public class Controller {
     private ExternalDB externalSystems;
     private CashRegister cashRegister;
     private Sale sale;
-
+    /**
+     * Constructs a new Controller object with its dependencies injected.
+     * 
+     * @param exDB    the external database containing information about external systems
+     * @param printer the receipt printer used for printing receipts
+     */
     public Controller(ExternalDB exDB, ReceiptPrinter printer) {
         this.cashRegister = new CashRegister();
         this.externalSystems = exDB;
@@ -26,15 +31,27 @@ public class Controller {
     public void startSale() {
         sale = new Sale();
     }
-
+    /**
+     * Retrieves the Sale object associated with this instance.
+     *
+     * @return  the Sale object associated with this instance
+     */
     public Sale getSale(){
         return sale;
     }
-
+    /**
+     * Retrieves the CashRegister object associated with this instance.
+     *
+     * @return  the CashRegister object associated with this instance
+     */
     public CashRegister getCashRegister(){
         return this.cashRegister;
     }
-
+    /**
+     * Retrieves the sale data transfer object (DTO) associated with the current sale.
+     *
+     * @return          the sale data transfer object (DTO) associated with the current sale
+     */
     public saleDTO getSaleDTO(){     
         return sale.getDTO();
     }

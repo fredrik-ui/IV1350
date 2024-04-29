@@ -30,7 +30,6 @@ public class ControllerTest {
     @Test
     void testStartSale(){
         this.controllerInstance.startSale();
-        //assertNotEquals(null, this.controllerInstance.getSale(), "Start sale is sucesfull");
         assertNotNull(controllerInstance.getSale(), "Start sale is sucesfull");    
     }
 
@@ -73,20 +72,16 @@ public class ControllerTest {
         this.controllerInstance.startSale();
         double amount = 50;
 
-
         controllerInstance.scanItem(1, 2); 
         controllerInstance.scanItem(2, 1); 
         controllerInstance.startDiscount(0);
         double expectedOutput = controllerInstance.getCashRegister().getMoney()+amount;
 
         Payment result = controllerInstance.enterPayemnt(amount);
-        double output = controllerInstance.getCashRegister().getMoney()+10; // The discountDB only returns 10 for now
+        double output = controllerInstance.getCashRegister().getMoney()+10; 
 
         assertEquals(expectedOutput, output);
         assertNotNull(result, "The payemnt went through");
-
-        //assertTrue(amount >= result.getTotalAmountPaid(), "Enough payment was provided");
-
     }
 
     @Test
@@ -99,7 +94,5 @@ public class ControllerTest {
         Payment result = controllerInstance.enterPayemnt(amount);
 
         assertNull(result, "Not enough payment");
-
     }
-
 }
