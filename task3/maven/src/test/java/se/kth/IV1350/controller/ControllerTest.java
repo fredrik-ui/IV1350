@@ -30,7 +30,7 @@ public class ControllerTest {
     @Test
     void testStartSale(){
         this.controllerInstance.startSale();
-        assertNotNull(controllerInstance.getSale(), "Start sale is sucesfull");    
+        assertNotNull(controllerInstance.getSale(), "Sale could not be intialized");    
     }
 
     @Test
@@ -68,7 +68,7 @@ public class ControllerTest {
     }
 
     @Test
-    void testEnterPayment_Successful() {
+    void testEnterPaymentSuccessful() {
         this.controllerInstance.startSale();
         double amount = 50;
 
@@ -85,7 +85,7 @@ public class ControllerTest {
     }
 
     @Test
-    void testEnterPayment_Unsuccessful() {
+    void testEnterPaymentUnsuccessful() {
         this.controllerInstance.startSale();
         double amount = 10.0;
         controllerInstance.scanItem(1, 2); 
