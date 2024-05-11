@@ -4,7 +4,7 @@ import se.kth.IV1350.controller.Controller;
 import se.kth.IV1350.model.Payment;
 import se.kth.IV1350.model.saleDTO;
 import se.kth.IV1350.integration.InvalidItemIdentifierException;
-import se.kth.IV1350.integration.DatabaseFailureException;
+import se.kth.IV1350.integration.ExternalSystemFailureException;
 
 
 public class View{
@@ -34,7 +34,7 @@ public class View{
             printer(item, 1);
         }catch(InvalidItemIdentifierException exception){
             System.err.println("Error: Invalid item identifier!");
-        }catch(DatabaseFailureException exception){
+        }catch(ExternalSystemFailureException exception){
             System.out.println("Error: Databse is offline");
         }
 
@@ -43,7 +43,7 @@ public class View{
             printer(item, 2);
         }catch(InvalidItemIdentifierException exception){
             System.err.println("Error: Invalid item identifier!");
-        }catch(DatabaseFailureException exception){
+        }catch(ExternalSystemFailureException exception){
             System.out.println("Error: Databse is offline");
         }
 
@@ -52,7 +52,7 @@ public class View{
             printer(item, 1);
         }catch(InvalidItemIdentifierException exception){
             System.err.println("Error: Invalid item identifier!");
-        }catch(DatabaseFailureException exception){
+        }catch(ExternalSystemFailureException exception){
             System.out.println("Error: Databse is offline");
         }
 

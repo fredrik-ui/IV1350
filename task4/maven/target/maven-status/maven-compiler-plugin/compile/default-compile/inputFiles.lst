@@ -1,5 +1,5 @@
 C:\Users\Fredrik\Desktop\IV1350\task4\maven\src\main\java\se\kth\IV1350\model\Receipt.java
-C:\Users\Fredrik\Desktop\IV1350\task4\maven\src\main\java\se\kth\IV1350\integration\DatabaseFailureException.java
+C:\Users\Fredrik\Desktop\IV1350\task4\maven\src\main\java\se\kth\IV1350\integration\ExternalSystemFailureException.java
 C:\Users\Fredrik\Desktop\IV1350\task4\maven\src\main\java\se\kth\IV1350\model\saleDTO.java
 C:\Users\Fredrik\Desktop\IV1350\task4\maven\src\main\java\se\kth\IV1350\integration\InvalidItemIdentifierException.java
 C:\Users\Fredrik\Desktop\IV1350\task4\maven\src\main\java\se\kth\IV1350\model\Sale.java

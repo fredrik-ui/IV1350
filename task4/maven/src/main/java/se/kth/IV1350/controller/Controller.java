@@ -3,7 +3,7 @@ package se.kth.IV1350.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.kth.IV1350.integration.DatabaseFailureException;
+import se.kth.IV1350.integration.ExternalSystemFailureException;
 import se.kth.IV1350.integration.ExternalDB;
 import se.kth.IV1350.integration.InvalidItemIdentifierException;
 import se.kth.IV1350.integration.ReceiptPrinter;
@@ -79,7 +79,7 @@ public class Controller {
      * @param  quantity the quantity of the item to be scanned
      * @return          the sale DTO after adding the item to the sale, or null if an error occurs
      */
-    public saleDTO scanItem(int itemID, int quantity) throws InvalidItemIdentifierException, DatabaseFailureException{
+    public saleDTO scanItem(int itemID, int quantity) throws InvalidItemIdentifierException, ExternalSystemFailureException{
         if(quantity <= 0){
             return null; // Error
         }
@@ -97,7 +97,7 @@ public class Controller {
         }catch(InvalidItemIdentifierException exception){
             logger.log(exception.getMessage() + ". Stack trace: ", exception);
             throw exception;
-        }catch(DatabaseFailureException exception){
+        }catch(ExternalSystemFailureException exception){
             logger.log(exception.getMessage() + ". Stack trace: ", exception);
             throw exception;
         }
