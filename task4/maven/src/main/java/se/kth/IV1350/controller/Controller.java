@@ -1,19 +1,25 @@
 package se.kth.IV1350.controller;
 
+import se.kth.IV1350.integration.DatabaseFailureException;
 import se.kth.IV1350.integration.ExternalDB;
+import se.kth.IV1350.integration.InvalidItemIdentifierException;
 import se.kth.IV1350.integration.ReceiptPrinter;
 import se.kth.IV1350.integration.itemDTO;
-import se.kth.IV1350.model.Amount;
-import se.kth.IV1350.model.CashRegister;
-import se.kth.IV1350.model.Payment;
-import se.kth.IV1350.model.Sale;
-import se.kth.IV1350.model.saleDTO;
+// import se.kth.IV1350.model.Amount;
+// import se.kth.IV1350.model.CashRegister;
+// import se.kth.IV1350.model.Payment;
+// import se.kth.IV1350.model.Sale;
+// import se.kth.IV1350.model.saleDTO;
+import se.kth.IV1350.model.*;
+import se.kth.IV1350.utils.*;
+
 
 public class Controller {
 
     private ExternalDB externalSystems;
     private CashRegister cashRegister;
     private Sale sale;
+    private FileLogger logger;
     /**
      * Constructs a new Controller object with its dependencies injected.
      * 
@@ -23,6 +29,7 @@ public class Controller {
     public Controller(ExternalDB exDB, ReceiptPrinter printer) {
         this.cashRegister = new CashRegister();
         this.externalSystems = exDB;
+        logger = new FileLogger();
     }
 
     /**
@@ -62,17 +69,27 @@ public class Controller {
      * @param  quantity the quantity of the item to be scanned
      * @return          the sale DTO after adding the item to the sale, or null if an error occurs
      */
-    public saleDTO scanItem(int itemID, int quantity) {
+    public saleDTO scanItem(int itemID, int quantity) throws InvalidItemIdentifierException, DatabaseFailureException{
         if(quantity <= 0){
             return null; // Error
         }
-        itemDTO collectedItem = sale.checkForDuplicateItem(itemID);
+
+        try{
+            itemDTO collectedItem = sale.checkForDuplicateItem(itemID);
         
-        if (collectedItem == null) {
-            collectedItem = externalSystems.getInventorySystem().getItemFromDB(itemID);
-            sale.additemToSale(collectedItem, quantity, false);
-        } else {
-            sale.additemToSale(collectedItem, quantity, true);
+            if (collectedItem == null) {
+                collectedItem = externalSystems.getInventorySystem().getItemFromDB(itemID);
+                sale.additemToSale(collectedItem, quantity, false);
+            } else {
+                sale.additemToSale(collectedItem, quantity, true);
+            }
+
+        }catch(InvalidItemIdentifierException exception){
+            logger.log(exception.getMessage() + ". Stack trace: ", exception);
+            throw exception;
+        }catch(DatabaseFailureException exception){
+            logger.log(exception.getMessage() + ". Stack trace: ", exception);
+            throw exception;
         }
     
         return getSaleDTO();

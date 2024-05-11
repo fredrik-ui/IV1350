@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="se.kth.IV1350.view.ViewTest" time="0" tests="0" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="se.kth.IV1350.view.ViewTest" time="0.001" tests="0" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="20"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\Fredrik\Desktop\IV1350\task3\maven\target\test-classes;C:\Users\Fredrik\Desktop\IV1350\task3\maven\target\classes;C:\Users\Fredrik\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.0\junit-jupiter-api-5.8.0.jar;C:\Users\Fredrik\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Fredrik\.m2\repository\org\junit\platform\junit-platform-commons\1.8.0\junit-platform-commons-1.8.0.jar;C:\Users\Fredrik\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Fredrik\.m2\repository\commons-codec\commons-codec\1.11\commons-codec-1.11.jar;"/>
+    <property name="java.class.path" value="C:\Users\Fredrik\Desktop\IV1350\task4\maven\target\test-classes;C:\Users\Fredrik\Desktop\IV1350\task4\maven\target\classes;C:\Users\Fredrik\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.0\junit-jupiter-api-5.8.0.jar;C:\Users\Fredrik\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Fredrik\.m2\repository\org\junit\platform\junit-platform-commons\1.8.0\junit-platform-commons-1.8.0.jar;C:\Users\Fredrik\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Fredrik\.m2\repository\commons-codec\commons-codec\1.11\commons-codec-1.11.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -16,9 +16,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="GB"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-20\bin"/>
-    <property name="sun.java.command" value="C:\Users\Fredrik\AppData\Local\Temp\surefire2459954832387858173\surefirebooter8275182103301366008.jar C:\Users\Fredrik\AppData\Local\Temp\surefire2459954832387858173 2024-05-01T15-50-52_002-jvmRun1 surefire17358960589831552307tmp surefire_016911255069482404143tmp"/>
+    <property name="sun.java.command" value="C:\Users\Fredrik\AppData\Local\Temp\surefire2896990081903634218\surefirebooter9283516405848015958.jar C:\Users\Fredrik\AppData\Local\Temp\surefire2896990081903634218 2024-05-11T12-35-18_088-jvmRun1 surefire1804844510101621136tmp surefire_012820488823484573659tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\Fredrik\Desktop\IV1350\task3\maven\target\test-classes;C:\Users\Fredrik\Desktop\IV1350\task3\maven\target\classes;C:\Users\Fredrik\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.0\junit-jupiter-api-5.8.0.jar;C:\Users\Fredrik\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Fredrik\.m2\repository\org\junit\platform\junit-platform-commons\1.8.0\junit-platform-commons-1.8.0.jar;C:\Users\Fredrik\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Fredrik\.m2\repository\commons-codec\commons-codec\1.11\commons-codec-1.11.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\Fredrik\Desktop\IV1350\task4\maven\target\test-classes;C:\Users\Fredrik\Desktop\IV1350\task4\maven\target\classes;C:\Users\Fredrik\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.8.0\junit-jupiter-api-5.8.0.jar;C:\Users\Fredrik\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\Fredrik\.m2\repository\org\junit\platform\junit-platform-commons\1.8.0\junit-platform-commons-1.8.0.jar;C:\Users\Fredrik\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Fredrik\.m2\repository\commons-codec\commons-codec\1.11\commons-codec-1.11.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Fredrik"/>
     <property name="user.language" value="en"/>
@@ -26,12 +26,12 @@
     <property name="java.version.date" value="2023-03-21"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-20"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="C:\Users\Fredrik\Desktop\IV1350\task3\maven"/>
+    <property name="basedir" value="C:\Users\Fredrik\Desktop\IV1350\task4\maven"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Fredrik\AppData\Local\Temp\surefire2459954832387858173\surefirebooter8275182103301366008.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Fredrik\AppData\Local\Temp\surefire2896990081903634218\surefirebooter9283516405848015958.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="20+36-2344"/>
@@ -46,7 +46,7 @@
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\Fredrik\AppData\Local\Temp\"/>
     <property name="java.version" value="20"/>
-    <property name="user.dir" value="C:\Users\Fredrik\Desktop\IV1350\task3\maven"/>
+    <property name="user.dir" value="C:\Users\Fredrik\Desktop\IV1350\task4\maven"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="user.language.format" value="sv"/>

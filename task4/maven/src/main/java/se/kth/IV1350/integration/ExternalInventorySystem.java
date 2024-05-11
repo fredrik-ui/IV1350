@@ -23,9 +23,16 @@ public class ExternalInventorySystem {
      * @param  itemID  the ID of the item to retrieve
      * @return         the item with the given ID, or null if not found
      */
-    public itemDTO getItemFromDB(int itemID) {
+    public itemDTO getItemFromDB(int itemID) throws InvalidItemIdentifierException, DatabaseFailureException {
+        if(itemID == 51){
+            throw new DatabaseFailureException();
+        }
         itemDTO item = checkInventory(itemID);
-        return item;
+        if(item != null){
+            return item;
+        }
+        throw new InvalidItemIdentifierException(itemID);
+
     }
 
     /**
