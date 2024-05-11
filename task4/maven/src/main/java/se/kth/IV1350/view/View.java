@@ -16,6 +16,7 @@ public class View{
      */
     public View(Controller contr){
         this.contr = contr;
+        contr.addObserver(new TotalRevenueView());
     }
     /**
      * Runs the function.
@@ -38,7 +39,7 @@ public class View{
         }
 
         try{
-            item = contr.scanItem(15, 1);
+            item = contr.scanItem(2, 1);
             printer(item, 2);
         }catch(InvalidItemIdentifierException exception){
             System.err.println("Error: Invalid item identifier!");
@@ -47,7 +48,7 @@ public class View{
         }
 
         try{
-            item = contr.scanItem(51, 1);
+            item = contr.scanItem(1, 1);
             printer(item, 1);
         }catch(InvalidItemIdentifierException exception){
             System.err.println("Error: Invalid item identifier!");

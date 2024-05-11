@@ -5,7 +5,9 @@
 // import org.junit.jupiter.api.Test;
 // import static org.junit.jupiter.api.Assertions.*;
 
+// import se.kth.IV1350.integration.DatabaseFailureException;
 // import se.kth.IV1350.integration.ExternalDB;
+// import se.kth.IV1350.integration.InvalidItemIdentifierException;
 // import se.kth.IV1350.integration.ReceiptPrinter;
 // import se.kth.IV1350.model.Payment;
 // import se.kth.IV1350.model.saleDTO;
@@ -40,59 +42,75 @@
 //         assertNotNull(saleDTO, "SaleDTO should not be null");
 //     }
 
-//     @Test
-//     void testScanItemExist(){
-//         this.controllerInstance.startSale();
-//         int itemID = 1;
-//         int quantity = 2;
+// @Test
+// void testScanItemExist() {
+//     this.controllerInstance.startSale();
+//     int itemID = 1;
+//     int quantity = 2;
 
-
+//     try {
 //         saleDTO saleDTO = controllerInstance.scanItem(itemID, quantity);
 //         assertNotNull(saleDTO, "SaleDTO should not be null");
+//     } catch (InvalidItemIdentifierException | DatabaseFailureException e) {
+//         fail("Item or Database error:  " + e.getMessage());
 //     }
-//     @Test
-//     void testScanItemDontExist(){
-//         this.controllerInstance.startSale();
-//         int itemID = 8;
-//         int quantity = 2;
+// }
+
+// @Test
+// void testScanItemDontExist() {
+//     this.controllerInstance.startSale();
+//     int itemID = 8;
+//     int quantity = 2;
+//     try {
 //         saleDTO saleDTO = controllerInstance.scanItem(itemID, quantity);
-//         assertNull(saleDTO, "SaleDTO should not be null");
+//         assertNull(saleDTO, "SaleDTO should be null");
+//     } catch (InvalidItemIdentifierException | DatabaseFailureException e) {
+//         fail("Item or Database error: " + e.getMessage());
 //     }
+// }
 
-//     @Test 
-//     void testStartDiscount(){
-//         this.controllerInstance.startSale();
-//         int customerID = 1;
-//         double newPrice = controllerInstance.startDiscount(customerID);
-//         assertTrue(newPrice >= 0, "New price should be greater than or equal to 0");
-//     }
+// @Test
+// void testStartDiscount() {
+//     this.controllerInstance.startSale();
+//     int customerID = 1;
+//     double newPrice = controllerInstance.startDiscount(customerID);
+//     assertTrue(newPrice >= 0, "New price should be greater than or equal to 0");
+// }
 
-//     @Test
-//     void testEnterPaymentSuccessful() {
-//         this.controllerInstance.startSale();
-//         double amount = 50;
+// @Test
+// void testEnterPaymentSuccessful() {
+//     this.controllerInstance.startSale();
+//     double amount = 50;
 
-//         controllerInstance.scanItem(1, 2); 
-//         controllerInstance.scanItem(2, 1); 
+//     try {
+//         controllerInstance.scanItem(1, 2);
+//         controllerInstance.scanItem(2, 1);
 //         controllerInstance.startDiscount(0);
-//         double expectedOutput = controllerInstance.getCashRegister().getMoney()+amount;
+//         double expectedOutput = controllerInstance.getCashRegister().getMoney() + amount;
 
 //         Payment result = controllerInstance.enterPayemnt(amount);
-//         double output = controllerInstance.getCashRegister().getMoney()+10; 
+//         double output = controllerInstance.getCashRegister().getMoney() + 10;
 
 //         assertEquals(expectedOutput, output);
-//         assertNotNull(result, "The payemnt went through");
+//         assertNotNull(result, "The payment did not go through");
+//     } catch (InvalidItemIdentifierException | DatabaseFailureException e) {
+//         fail("Item or Database error: " + e.getMessage());
 //     }
+// }
 
-//     @Test
-//     void testEnterPaymentUnsuccessful() {
-//         this.controllerInstance.startSale();
-//         double amount = 10.0;
-//         controllerInstance.scanItem(1, 2); 
-//         controllerInstance.scanItem(2, 1); 
-        
+// @Test
+// void testEnterPaymentUnsuccessful() {
+//     this.controllerInstance.startSale();
+//     double amount = 0.0;
+//     try {
+//         controllerInstance.scanItem(1, 2);
+//         controllerInstance.scanItem(2, 1);
 //         Payment result = controllerInstance.enterPayemnt(amount);
 
 //         assertNull(result, "Not enough payment");
+//     } catch (InvalidItemIdentifierException | DatabaseFailureException e) {
+//         fail("Item or Database error:  " + e.getMessage());
 //     }
+// }
+
 // }

@@ -1,6 +1,7 @@
 package se.kth.IV1350.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -16,6 +17,7 @@ public class Sale {
     private Amount totalVAT;
     private Amount totalPriceAfterDiscount;
     private ArrayList<ItemAndQuantity> scannedItems = new ArrayList<>();
+    private List<SaleObserver> saleObserver = new ArrayList<>();
     private saleDTO DTO;
 
     /**
@@ -132,9 +134,17 @@ public class Sale {
             System.out.println("Not enough for a payemnt");
             return null;
         }
+        notifyObserver();
         Receipt receipt = new Receipt(payment, getDTO());
         ReceiptPrinter.printReceipt(receipt);
         return payment;
+    }
+
+    private void notifyObserver(){
+        for(SaleObserver observer : saleObserver){
+            System.out.println(observer);
+            observer.newSale(totalPriceAfterDiscount);
+        }
     }
 
     /**
@@ -173,4 +183,7 @@ public class Sale {
         return currentTime;
     }
 
+    public void addSaleObserver(SaleObserver obs){
+        saleObserver.add(obs);
+    }
 }

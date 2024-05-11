@@ -1,5 +1,8 @@
 package se.kth.IV1350.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.kth.IV1350.integration.DatabaseFailureException;
 import se.kth.IV1350.integration.ExternalDB;
 import se.kth.IV1350.integration.InvalidItemIdentifierException;
@@ -13,13 +16,15 @@ import se.kth.IV1350.integration.itemDTO;
 import se.kth.IV1350.model.*;
 import se.kth.IV1350.utils.*;
 
-
 public class Controller {
 
     private ExternalDB externalSystems;
     private CashRegister cashRegister;
     private Sale sale;
     private FileLogger logger;
+    private TotalRevenueFileOutput totalRevenueFileOutput;
+    private List<SaleObserver> saleObserver = new ArrayList<>(); 
+
     /**
      * Constructs a new Controller object with its dependencies injected.
      * 
@@ -30,6 +35,8 @@ public class Controller {
         this.cashRegister = new CashRegister();
         this.externalSystems = exDB;
         logger = new FileLogger();
+        totalRevenueFileOutput = new TotalRevenueFileOutput();
+        saleObserver.add(totalRevenueFileOutput);
     }
 
     /**
@@ -37,6 +44,9 @@ public class Controller {
     */
     public void startSale() {
         sale = new Sale();
+        for(SaleObserver obs : saleObserver){
+            sale.addSaleObserver(obs);
+        }
     }
     /**
      * Retrieves the Sale object associated with this instance.
@@ -120,6 +130,10 @@ public class Controller {
         externalSystems.getInventorySystem().updateInventory();
         cashRegister.addPayment(change);
         return change;
+    }
+
+    public void addObserver(SaleObserver obs){
+        saleObserver.add(obs);
     }
 
 }
