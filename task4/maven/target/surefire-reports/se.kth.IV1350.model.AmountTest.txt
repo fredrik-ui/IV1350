@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: se.kth.IV1350.startup.MainTest
+Test set: se.kth.IV1350.model.AmountTest
 -------------------------------------------------------------------------------
-Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in se.kth.IV1350.startup.MainTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in se.kth.IV1350.model.AmountTest

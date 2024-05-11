@@ -12,7 +12,6 @@ public class TotalRevenueView implements SaleObserver{
      */
     @Override
     public void saleRevenue(Amount price) {
-        System.out.println("SAHkjSH");
         totalPrice += price.getValue();
         System.out.println("Total revenue: " + totalPrice + " SEK");
     }

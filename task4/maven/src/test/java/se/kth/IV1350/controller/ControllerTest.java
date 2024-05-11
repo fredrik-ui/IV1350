@@ -18,103 +18,104 @@ public class ControllerTest {
     private ReceiptPrinter printer;
 
     @BeforeEach
-    void setUp(){
+    public void setUp() {
         externalDB = new ExternalDB();
         printer = new ReceiptPrinter();
-        this.controllerInstance = new Controller(externalDB, printer);
+        controllerInstance = new Controller(externalDB, printer);
     }
 
     @AfterEach
-    void tearDown(){
-        this.controllerInstance = null;
+    public void tearDown() {
     }
 
     @Test
-    void testStartSale(){
-        this.controllerInstance.startSale();
-        assertNotNull(controllerInstance.getSale(), "Sale could not be intialized");    
+    public void testStartSale() {
+        controllerInstance.startSale();
+        assertNotNull(controllerInstance.getSale(), "Sale could not be intialized");
     }
 
     @Test
-    void testGetSaleDTO(){
-        this.controllerInstance.startSale();
+    public void testGetSaleDTO() {
+        controllerInstance.startSale();
         saleDTO saleDTO = controllerInstance.getSaleDTO();
         assertNotNull(saleDTO, "SaleDTO should not be null");
     }
 
-@Test
-void testScanItemExist() {
-    this.controllerInstance.startSale();
-    int itemID = 1;
-    int quantity = 2;
+    @Test
+    public void testScanItemExist() {
+        controllerInstance.startSale();
+        int itemID = 1;
+        int quantity = 2;
 
-    try {
-        saleDTO saleDTO = controllerInstance.scanItem(itemID, quantity);
-        assertNotNull(saleDTO, "SaleDTO should not be null");
-    } catch (InvalidItemIdentifierException | ExternalSystemFailureException e) {
-        fail("Item or Database error:  " + e.getMessage());
+        try {
+            saleDTO saleDTO = controllerInstance.scanItem(itemID, quantity);
+            assertNotNull(saleDTO, "SaleDTO should not be null");
+        } catch (InvalidItemIdentifierException | ExternalSystemFailureException e) {
+            fail("Item or Database error:  " + e.getMessage());
+        }
     }
-}
 
-@Test
-void testScanItemDontExist() {
-    this.controllerInstance.startSale();
-    int itemID = 8;
-    int quantity = 2;
-    try {
-        controllerInstance.scanItem(itemID, quantity);
-        fail("Item dose not exist");
-    } catch (InvalidItemIdentifierException e) {
-        // The expected exception was caught, the test passes
-        assertTrue(e.getMessage().contains("Error: Could not find product with itemIdenifier: "+itemID+" in the inventory catalog."), "Expected error message does not match");
-    } catch (ExternalSystemFailureException e) {
-        fail("Unexpected ExternalSystemFailureException was thrown: " + e.getMessage());
+    @Test
+    public void testScanItemDontExist() {
+        controllerInstance.startSale();
+        int itemID = 8;
+        int quantity = 2;
+        try {
+            controllerInstance.scanItem(itemID, quantity);
+            fail("Item dose not exist");
+        } catch (InvalidItemIdentifierException e) {
+            // The expected exception was caught, the test passes
+            assertTrue(e.getMessage().contains(
+                    "Error: Could not find product with itemIdenifier: " + itemID + " in the inventory catalog."),
+                    "Expected error message does not match");
+        } catch (ExternalSystemFailureException e) {
+            fail("Unexpected ExternalSystemFailureException was thrown: " + e.getMessage());
+        }
     }
-}
 
-@Test
-void testStartDiscount() {
-    this.controllerInstance.startSale();
-    int customerID = 1;
-    double newPrice = controllerInstance.startDiscount(customerID);
-    assertTrue(newPrice >= 0, "New price should be greater than or equal to 0");
-}
-
-@Test
-void testEnterPaymentSuccessful() {
-    this.controllerInstance.startSale();
-    double amount = 50;
-
-    try {
-        controllerInstance.scanItem(1, 2);
-        controllerInstance.scanItem(2, 1);
-        controllerInstance.startDiscount(0);
-        double expectedOutput = controllerInstance.getCashRegister().getMoney() + 40; // 10 sek change not added
-
-        Payment result = controllerInstance.enterPayemnt(amount);
-        double output = controllerInstance.getCashRegister().getMoney() + 10;
-
-        assertEquals(expectedOutput, output);
-        assertNotNull(result, "The payment did not go through");
-    } catch (InvalidItemIdentifierException | ExternalSystemFailureException e) {
-        fail("Item or Database error: " + e.getMessage());
+    @Test
+    public void testStartDiscount() {
+        controllerInstance.startSale();
+        int customerID = 1;
+        double newPrice = controllerInstance.startDiscount(customerID);
+        assertTrue(newPrice >= 0, "New price should be greater than or equal to 0");
     }
-}
 
-@Test
-void testEnterPaymentUnsuccessful() {
-    this.controllerInstance.startSale();
-    double amount = 10.0;
-    try {
-        controllerInstance.scanItem(1, 2);
-        controllerInstance.scanItem(2, 1);
-        controllerInstance.startDiscount(0);
-        Payment result = controllerInstance.enterPayemnt(amount);
+    @Test
+    public void testEnterPaymentSuccessful() {
+        controllerInstance.startSale();
+        double amount = 50;
 
-        assertNull(result, "Not enough payment");
-    } catch (InvalidItemIdentifierException | ExternalSystemFailureException e) {
-        fail("Item or Database error:  " + e.getMessage());
+        try {
+            controllerInstance.scanItem(1, 2);
+            controllerInstance.scanItem(2, 1);
+            controllerInstance.startDiscount(0);
+            double expectedOutput = controllerInstance.getCashRegister().getMoney() + 40; // 10 sek change not added
+
+            Payment result = controllerInstance.enterPayemnt(amount);
+            double output = controllerInstance.getCashRegister().getMoney() + 10;
+
+            assertEquals(expectedOutput, output);
+            assertNotNull(result, "The payment did not go through");
+        } catch (InvalidItemIdentifierException | ExternalSystemFailureException e) {
+            fail("Item or Database error: " + e.getMessage());
+        }
     }
-}
+
+    @Test
+    public void testEnterPaymentUnsuccessful() {
+        controllerInstance.startSale();
+        double amount = 10.0;
+        try {
+            controllerInstance.scanItem(1, 2);
+            controllerInstance.scanItem(2, 1);
+            controllerInstance.startDiscount(0);
+            Payment result = controllerInstance.enterPayemnt(amount);
+
+            assertNull(result, "Not enough payment");
+        } catch (InvalidItemIdentifierException | ExternalSystemFailureException e) {
+            fail("Item or Database error:  " + e.getMessage());
+        }
+    }
 
 }

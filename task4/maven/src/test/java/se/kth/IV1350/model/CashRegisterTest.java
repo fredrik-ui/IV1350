@@ -20,12 +20,12 @@ public class CashRegisterTest {
     }
 
     @Test
-    void testCashRegisterConstructor(){
+    public void testCashRegisterConstructor(){
         assertEquals(200, cashRegisterInstance.getMoney(), "Wrong amount of money in the cash register");
     }
 
     @Test 
-    void testAddPayment(){
+    public void testAddPayment(){
 
         Amount cashGiven = new Amount(100);
         Amount totalPriceOfSale = new Amount(20);

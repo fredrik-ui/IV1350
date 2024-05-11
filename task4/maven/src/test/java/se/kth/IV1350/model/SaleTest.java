@@ -13,7 +13,7 @@ public class SaleTest {
 
 
     @BeforeEach
-    void setUp(){
+    public void setUp(){
 
         this.saleInstance = new Sale();
         saleInstance.additemToSale(new itemDTO(1, "TestItem: "+1, new Amount(10.0+1), new Amount(2.0), "Test description: "+1), 2, false);
@@ -21,12 +21,12 @@ public class SaleTest {
     }
 
     @AfterEach
-    void tearDown(){
+    public void tearDown(){
         this.saleInstance = null;
     }
 
     @Test
-    void testAddNewItemToSale(){
+    public void testAddNewItemToSale(){
 
         int expectedOutput = 6;
         int quantity = 2;
@@ -39,7 +39,7 @@ public class SaleTest {
     }
 
     @Test
-    void testAddExistingItemToSale(){
+    public void testAddExistingItemToSale(){
 
         int initialQuantity  = 2;
         int additionalQuantity  = 4;
@@ -59,13 +59,13 @@ public class SaleTest {
     }
 
     @Test 
-    void applyTotalDiscountSuccess(){
+    public void applyTotalDiscountSuccess(){
         Amount amount = new Amount(10);
         Amount newPrice = saleInstance.applyTotalDiscount(amount);
         assertEquals(saleInstance.getTotalPrice().subtract(amount).getValue(), newPrice.getValue(), "The new price is not calucalted corectly");
     }
     @Test 
-    void applyTotalDiscountFail(){
+    public void applyTotalDiscountFail(){
         Amount amount = new Amount(100);
         Amount newPrice = saleInstance.applyTotalDiscount(amount);
         assertTrue(saleInstance.getTotalPrice().subtract(amount).getValue() <=0);
@@ -73,7 +73,7 @@ public class SaleTest {
     }
 
     @Test
-    void testEndSaleSuccess(){
+    public void testEndSaleSuccess(){
         double amount = 200;
         saleInstance.applyTotalDiscount(new Amount(10));
         Payment payemnt = saleInstance.endSale(amount);
@@ -83,7 +83,7 @@ public class SaleTest {
     }
 
     @Test
-    void testEndSaleFail(){
+    public void testEndSaleFail(){
         double amount = 30;
         saleInstance.applyTotalDiscount(new Amount(10));
         Payment payemnt = saleInstance.endSale(amount);

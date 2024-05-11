@@ -30,10 +30,7 @@ public class Payment {
      * @return                the change to be returned to the customer, or -1 if the amount paid is less than the total price
      */
     private Amount calculateChange(double amount, Amount totalPrice){
-        System.out.println("Amount: "+amount);
-        System.out.println("Total price: "+totalPrice.getValue());
         if(amount >= totalPrice.getValue()){
-            System.out.println("JSHKJAHSKDJHSAKJ");
             return new Amount(amount - totalPrice.getValue());
         } else {
             return null;

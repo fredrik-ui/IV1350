@@ -131,7 +131,6 @@ public class Sale {
     public Payment endSale(double amount) {
         Payment payment = new Payment(amount, totalPriceAfterDiscount);
         if (payment.getTotalChange() == null) {
-            System.out.println("Not enough for a payemnt");
             return null;
         }
         notifyObserver();
@@ -142,7 +141,6 @@ public class Sale {
 
     private void notifyObserver(){
         for(SaleObserver observer : saleObserver){
-            System.out.println(observer);
             observer.saleRevenue(totalPriceAfterDiscount);
         }
     }

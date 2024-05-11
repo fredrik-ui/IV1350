@@ -8,7 +8,7 @@ public class ItemAndQuantityTest {
     private ItemAndQuantity itemAndQuantityInstance;
 
     @Test
-    void testConstructor() {
+    public void testConstructor() {
         itemDTO item = new itemDTO(1, "TestItem", new Amount(10.0), new Amount(2.0), "Test description");
         itemAndQuantityInstance = new ItemAndQuantity(item, 2);
         assertEquals(item, itemAndQuantityInstance.getItemDTO(), "The item should exist in the instance created");

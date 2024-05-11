@@ -1,7 +1,6 @@
 package se.kth.IV1350.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import se.kth.IV1350.integration.itemDTO;

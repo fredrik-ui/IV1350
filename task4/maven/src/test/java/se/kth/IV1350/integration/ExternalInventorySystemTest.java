@@ -18,7 +18,7 @@ public class ExternalInventorySystemTest {
     }
 
     @Test
-    void testGetItemFromDBSuccess() {
+    public void testGetItemFromDBSuccess() {
         int itemID = 1;
         try {
             itemDTO item = externalInventorySystemInstance.getItemFromDB(itemID);
@@ -30,7 +30,7 @@ public class ExternalInventorySystemTest {
     }
 
     @Test
-    void testGetItemFromDBNotFound() {
+    public void testGetItemFromDBNotFound() {
         int itemID = 10;
         try {
             externalInventorySystemInstance.getItemFromDB(itemID);
@@ -43,7 +43,7 @@ public class ExternalInventorySystemTest {
     }
 
     @Test
-    void testGetItemFromDB_ExternalSystemFailureException() {
+    public void testGetItemFromDB_ExternalSystemFailureException() {
         int itemID = 51; // This item ID triggers ExternalSystemFailureException in the test setup
         try {
             externalInventorySystemInstance.getItemFromDB(itemID);
