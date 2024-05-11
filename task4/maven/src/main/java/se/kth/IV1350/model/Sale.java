@@ -143,7 +143,7 @@ public class Sale {
     private void notifyObserver(){
         for(SaleObserver observer : saleObserver){
             System.out.println(observer);
-            observer.newSale(totalPriceAfterDiscount);
+            observer.saleRevenue(totalPriceAfterDiscount);
         }
     }
 

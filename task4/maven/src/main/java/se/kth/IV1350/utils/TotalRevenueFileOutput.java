@@ -24,7 +24,7 @@ public class TotalRevenueFileOutput implements SaleObserver {
      * @param price the amount to add to the total price
      */
     @Override
-    public void newSale(Amount price) {
+    public void saleRevenue(Amount price) {
         totalPrice += price.getValue();
         logger.println("Total revenue: " + totalPrice + " SEK");
         logger.flush();

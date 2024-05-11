@@ -11,7 +11,7 @@ public class TotalRevenueView implements SaleObserver{
      * @param  price  the amount of the sale to add to the total revenue
      */
     @Override
-    public void newSale(Amount price) {
+    public void saleRevenue(Amount price) {
         System.out.println("SAHkjSH");
         totalPrice += price.getValue();
         System.out.println("Total revenue: " + totalPrice + " SEK");
