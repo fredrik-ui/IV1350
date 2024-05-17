@@ -23,12 +23,13 @@ public class Controller {
     private Sale sale;
     private FileLogger logger;
     private TotalRevenueFileOutput totalRevenueFileOutput;
-    private List<SaleObserver> saleObserver = new ArrayList<>(); 
+    private List<SaleObserver> saleObserver = new ArrayList<>();
 
     /**
      * Constructs a new Controller object with its dependencies injected.
      * 
-     * @param exDB    the external database containing information about external systems
+     * @param exDB    the external database containing information about external
+     *                systems
      * @param printer the receipt printer used for printing receipts
      */
     public Controller(ExternalDB exDB, ReceiptPrinter printer) {
@@ -40,53 +41,65 @@ public class Controller {
     }
 
     /**
-    * Starts a new sale by initializing a new Sale object.
-    */
+     * Starts a new sale by initializing a new Sale object.
+     */
     public void startSale() {
         sale = new Sale();
-        for(SaleObserver obs : saleObserver){
+        for (SaleObserver obs : saleObserver) {
             sale.addSaleObserver(obs);
         }
     }
+
     /**
      * Retrieves the Sale object associated with this instance.
      *
-     * @return  the Sale object associated with this instance
+     * @return the Sale object associated with this instance
      */
-    public Sale getSale(){
+    public Sale getSale() {
         return sale;
     }
+
     /**
      * Retrieves the CashRegister object associated with this instance.
      *
-     * @return  the CashRegister object associated with this instance
+     * @return the CashRegister object associated with this instance
      */
-    public CashRegister getCashRegister(){
+    public CashRegister getCashRegister() {
         return this.cashRegister;
     }
+
     /**
-     * Retrieves the sale data transfer object (DTO) associated with the current sale.
+     * Retrieves the sale data transfer object (DTO) associated with the current
+     * sale.
      *
-     * @return          the sale data transfer object (DTO) associated with the current sale
+     * @return the sale data transfer object (DTO) associated with the current sale
      */
-    public saleDTO getSaleDTO(){     
+    public saleDTO getSaleDTO() {
         return sale.getDTO();
     }
+
     /**
-     * Scans an item with the given item ID and quantity, and returns the sale DTO after adding the item to the sale.
+     * Scans an item with the given item ID and quantity, and returns the sale DTO
+     * after adding the item to the sale.
      *
-     * @param  itemID   the ID of the item to be scanned
-     * @param  quantity the quantity of the item to be scanned
-     * @return          the sale DTO after adding the item to the sale, or null if an error occurs
+     * @param itemID   the ID of the item to be scanned
+     * @param quantity the quantity of the item to be scanned
+     * @return the sale DTO after adding the item to the sale, or null if an error
+     *         occurs
+     * @throws InvalidItemIdentifierException if the item ID does not exist in the
+     *                                        inventory
+     * @throws ExternalSystemFailureException if there is a failure in the external
+     *                                        system while retrieving the item
      */
-    public saleDTO scanItem(int itemID, int quantity) throws InvalidItemIdentifierException, ExternalSystemFailureException{
-        if(quantity <= 0){
+    public saleDTO scanItem(int itemID, int quantity)
+            throws InvalidItemIdentifierException, ExternalSystemFailureException {
+        if (quantity <= 0) {
             return null; // Error
         }
 
-        try{
+        try {
             itemDTO collectedItem = sale.checkForDuplicateItem(itemID);
-        
+
             if (collectedItem == null) {
                 collectedItem = externalSystems.getInventorySystem().getItemFromDB(itemID);
                 sale.additemToSale(collectedItem, quantity, false);
@@ -94,36 +107,41 @@ public class Controller {
                 sale.additemToSale(collectedItem, quantity, true);
             }
 
-        }catch(InvalidItemIdentifierException exception){
+        } catch (InvalidItemIdentifierException exception) {
             logger.log(exception.getMessage() + ". Stack trace: ", exception);
             throw exception;
-        }catch(ExternalSystemFailureException exception){
+        } catch (ExternalSystemFailureException exception) {
             logger.log(exception.getMessage() + ". Stack trace: ", exception);
             throw exception;
         }
-    
+
         return getSaleDTO();
     }
+
     /**
-     * Calculates the discount for a customer and returns the new price after applying the discount.
+     * Calculates the discount for a customer and returns the new price after
+     * applying the discount.
      *
-     * @param  customerID  the ID of the customer
-     * @return             the new price after applying the discount
+     * @param customerID the ID of the customer
+     * @return the new price after applying the discount
      */
     public double startDiscount(int customerID) {
         Amount discount = externalSystems.getDiscountDBSystem().getDiscount(customerID, sale);
         double newPrice = sale.applyTotalDiscount(discount).getValue();
         return newPrice;
     }
+
     /**
-     * Ends the sale by processing the payment and updating the accounting and inventory systems.
+     * Ends the sale by processing the payment and updating the accounting and
+     * inventory systems.
      *
-     * @param  amount  the amount tendered by the customer
-     * @return         the payment object representing the transaction, or null if the amount paid is less than the total price
+     * @param amount the amount tendered by the customer
+     * @return the payment object representing the transaction, or null if the
+     *         amount paid is less than the total price
      */
     public Payment enterPayemnt(double amount) {
         Payment change = sale.endSale(amount);
-        if(change == null){
+        if (change == null) {
             return null;
         }
         externalSystems.getAccountingSystem().updateAccounting();
@@ -132,7 +150,7 @@ public class Controller {
         return change;
     }
 
-    public void addObserver(SaleObserver obs){
+    public void addObserver(SaleObserver obs) {
         saleObserver.add(obs);
     }
 

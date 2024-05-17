@@ -33,27 +33,27 @@ public class View{
             item = contr.scanItem(1, 2);
             printer(item, 1);
         }catch(InvalidItemIdentifierException exception){
-            System.err.println("Error: Invalid item identifier!");
+            System.out.println("Error: Invalid item identifier!\n");
         }catch(ExternalSystemFailureException exception){
-            System.out.println("Error: Databse is offline");
+            System.out.println("Error: Databse is offline\n");
         }
 
         try{
-            item = contr.scanItem(2, 1);
+            item = contr.scanItem(100, 1);
             printer(item, 2);
         }catch(InvalidItemIdentifierException exception){
-            System.err.println("Error: Invalid item identifier!");
+            System.out.println("Error: Invalid item identifier!\n");
         }catch(ExternalSystemFailureException exception){
-            System.out.println("Error: Databse is offline");
+            System.out.println("Error: Databse is offline\\n");
         }
 
         try{
-            item = contr.scanItem(1, 1);
+            item = contr.scanItem(51, 1);
             printer(item, 1);
         }catch(InvalidItemIdentifierException exception){
-            System.err.println("Error: Invalid item identifier!");
+            System.out.println("Error: Invalid item identifier!\n");
         }catch(ExternalSystemFailureException exception){
-            System.out.println("Error: Databse is offline");
+            System.out.println("Error: Databse is offline\n");
         }
 
         double newPrice = contr.startDiscount(1);
