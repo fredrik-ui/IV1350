@@ -35,7 +35,7 @@ public class View{
         }catch(InvalidItemIdentifierException exception){
             System.out.println("Error: Invalid item identifier!\n");
         }catch(ExternalSystemFailureException exception){
-            System.out.println("Error: Databse is offline\n");
+            System.out.println("Error: Database is offline\n");
         }
 
         try{
@@ -44,7 +44,7 @@ public class View{
         }catch(InvalidItemIdentifierException exception){
             System.out.println("Error: Invalid item identifier!\n");
         }catch(ExternalSystemFailureException exception){
-            System.out.println("Error: Databse is offline\\n");
+            System.out.println("Error: Database is offline\\n");
         }
 
         try{
@@ -53,7 +53,7 @@ public class View{
         }catch(InvalidItemIdentifierException exception){
             System.out.println("Error: Invalid item identifier!\n");
         }catch(ExternalSystemFailureException exception){
-            System.out.println("Error: Databse is offline\n");
+            System.out.println("Error: Database is offline\n");
         }
 
         double newPrice = contr.startDiscount(1);

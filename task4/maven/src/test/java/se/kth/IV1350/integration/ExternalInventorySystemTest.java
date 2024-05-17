@@ -51,7 +51,7 @@ public class ExternalInventorySystemTest {
         } catch (InvalidItemIdentifierException e) {
             fail("Unexpected InvalidItemIdentifierException was thrown: " + e.getMessage());
         } catch (ExternalSystemFailureException exception) {
-            assertEquals(exception.getMessage(), "Error: connection to databse failed");
+            assertEquals(exception.getMessage(), "Error: connection to database failed");
         }
     }
 
